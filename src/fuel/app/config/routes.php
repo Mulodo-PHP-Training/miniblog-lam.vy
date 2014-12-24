@@ -20,7 +20,7 @@ return array(
 	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),	
 	'(:version)/users(:name)?' =>  array(array('GET', new Route('$1/user/search_user'))), 
 	//--------------------------POST--------------------------------
-	'(:version)/posts' => array(array('POST', new Route('$1/post/create'))),
+	'(:version)/posts' => array(array('POST', new Route('$1/post/create')), array('GET', new Route('$1/post/all_posts'))),
 	//deactive a post
     '(:version)/posts/:post_id/inactive' => array(array('PUT', new Route('$1/post/inactive_post'))),
 	//deactive a post

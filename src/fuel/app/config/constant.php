@@ -72,3 +72,8 @@ define('POST_UPDATE_MSG', 'Update post failed');
 define('POST_DELETE_ERROR', '2503');
 define('POST_DELETE_DESC', 'The post not exist or access is denied.');
 define('POST_DELETE_MSG', 'Delete post failed.');
+
+//get list post
+define('POST_GET_LIST_ERROR', '2507');
+define('POST_GET_LIST_DESC', 'Can\'t get data');
+define('POST_GET_LIST_MSG', 'Get all posts not success');
