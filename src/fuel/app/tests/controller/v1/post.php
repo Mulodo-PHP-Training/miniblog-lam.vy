@@ -71,7 +71,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test create the post is ok
 	 * method POST
-	 * link http://localhost/_blog/blog/src/v1/posts/
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/
 	 * compare with code is 200
 	 * @group create_ok
 	 *
@@ -86,7 +86,7 @@ class Test_Controller_V1_Post extends TestCase {
 		);
 		//set method and link
 		$method = 'POST';
-		$link = 'http://localhost/_blog/blog/src/v1/posts';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts';
 		$rs = $this->init_curl($test_data, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals(200, $rs['meta']['code']);
@@ -97,7 +97,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test create the post is not ok
 	 * method POST
-	 * link http://localhost/_blog/blog/src/v1/posts/
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/
 	 * compare with code is 1002 return
 	 * @group create_not_ok
 	 * @dataProvider create_provider
@@ -107,7 +107,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$test_data['token'] = self::$user['token'];
 		//set method and link
 		$method = 'POST';
-		$link = 'http://localhost/_blog/blog/src/v1/posts';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts';
 		$rs = $this->init_curl($test_data, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals(1002, $rs['meta']['code']);
@@ -176,7 +176,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test inactive the post is  ok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}/inactive
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/inactive
 	 * compare with code is 200, the data expected
 	 * @group update_inactive
 	 * 
@@ -195,7 +195,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$params['token'] = self::$user['token'];
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$test_data['post_id'].'/inactive';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$test_data['post_id'].'/inactive';
 		$data = $this->init_curl($params, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals('200', $data['meta']['code']);
@@ -210,7 +210,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test inactive the post is  notok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}/inactive
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/inactive
 	 * compare with code is 2504 
 	 * @group update_inactive
 	 * @depends test_inactive_post_ok
@@ -220,7 +220,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$params['token'] = self::$user['token'];
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$id.'/inactive';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$id.'/inactive';
 		$data = $this->init_curl($params, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals('2504', $data['meta']['code']);
@@ -230,7 +230,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test active the post is  ok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}/active
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/active
 	 * compare with code is 200, the data expected
 	 * @group update_active
 	 *
@@ -249,7 +249,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$params['token'] = self::$user['token'];
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$test_data['post_id'].'/active';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$test_data['post_id'].'/active';
 		$data = $this->init_curl($params, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals('200', $data['meta']['code']);
@@ -267,7 +267,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test inactive the post is  notok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}/active
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/active
 	 * compare with code is 2504
 	 * @group update_active
 	 * @depends test_active_post_ok
@@ -277,7 +277,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$params['token'] = self::$user['token'];
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$id.'/active';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$id.'/active';
 		$data = $this->init_curl($params, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals('2504', $data['meta']['code']);
@@ -288,7 +288,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test to edit the post is ok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 200, the data return with the data input
 	 * @group edit_post_ok
 	 * 
@@ -304,7 +304,7 @@ class Test_Controller_V1_Post extends TestCase {
 		
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$data['post_id'];
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$data['post_id'];
 		$rs = $this->init_curl($data, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals(200, $rs['meta']['code']);
@@ -318,7 +318,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test to edit the post is not ok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 2502, the author id input not match with author of post
 	 * @group edit_post_notok
 	 *
@@ -334,7 +334,7 @@ class Test_Controller_V1_Post extends TestCase {
 	
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$data['post_id'];
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$data['post_id'];
 		$rs = $this->init_curl($data, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals(2502, $rs['meta']['code']);
@@ -343,7 +343,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test to edit the post is validated not ok
 	 * method PUT
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 1002
 	 * @group edit_post_notok
 	 * @dataProvider edit_post_val_notok_provider
@@ -354,7 +354,7 @@ class Test_Controller_V1_Post extends TestCase {
 	
 		//set method and link
 		$method = 'PUT';
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$test_data['post_id'];
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$test_data['post_id'];
 		$rs = $this->init_curl($test_data, $method, $link);
 		//compare with the result and expected data
 		$this->assertEquals(1002, $rs['meta']['code']);
@@ -399,7 +399,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test to delete post not ok
 	 * method DELETE
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 2503
 	 * @group delete_post_notok
 	 * @dataProvider delete_provider
@@ -408,7 +408,7 @@ class Test_Controller_V1_Post extends TestCase {
 		//add token
 		$test_data['token'] = self::$user['token'];
 		//link
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$test_data['post_id'];
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$test_data['post_id'];
 		$method = 'DELETE';
 		$rs = $this->init_curl($test_data, $method, $link);		
 		//assert with error 2503
@@ -418,7 +418,7 @@ class Test_Controller_V1_Post extends TestCase {
 	/**
 	 * use test to delete post ok
 	 * method DELETE
-	 * link http://localhost/_blog/blog/src/v1/posts/{post_id}
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 200
 	 * @group delete_post_ok
 	 * @depends test_create_post_ok
@@ -428,7 +428,7 @@ class Test_Controller_V1_Post extends TestCase {
 		$test_data['token'] = self::$user['token'];
 		
 		//link
-		$link = 'http://localhost/_blog/blog/src/v1/posts/'.$data['id'];
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$data['id'];
 		$method = 'DELETE';
 		$rs = $this->init_curl($test_data, $method, $link);
 		//assert with error 2503
@@ -451,5 +451,22 @@ class Test_Controller_V1_Post extends TestCase {
 				'post_id' => '21',
 		);
 		return $data;
+	}
+	
+	/**
+	 * use test to get all posts ok
+	 * method GET
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/
+	 * compare with code is 200, result return  > 0
+	 * @group get_all_post
+	 */
+	public function test_get_all_posts() {
+		$method = 'GET';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts';
+	
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals(200, $rs['meta']['code']);
+		$this->assertGreaterThan(0, $rs['meta']['result']);
 	}
 }

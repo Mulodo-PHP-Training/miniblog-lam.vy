@@ -389,4 +389,21 @@ class Test_Model_V1_Post extends TestCase {
 		);
 		return $data;
 	}
+	
+	/**
+	 * funtion to test get all posts ok
+	 * compare result return > 0
+	 * @group get_all_post
+	 */
+	public function test_get_all_posts() {
+		
+		$rs = Post::get_all_posts();
+		
+		//count ting the result return
+		$row = count($rs);
+		//compare
+		$this->assertGreaterThan(0, $row);
+		
+	}
+	
 }
