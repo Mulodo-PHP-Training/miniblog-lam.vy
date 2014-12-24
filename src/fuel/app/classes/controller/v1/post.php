@@ -294,9 +294,9 @@ class Controller_V1_Post extends Controller_Rest {
 	 * @access  public
 	 * @return  Response
 	 */
-	public function get_list_post() {
+	public function get_all_posts() {
 		//call from model
-		$rs = Post::get_list_post();
+		$rs = Post::get_all_posts();
 		if (false !== $rs) {
 			
 			return $this->response(

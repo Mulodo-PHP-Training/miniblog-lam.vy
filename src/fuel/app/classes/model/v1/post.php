@@ -200,7 +200,7 @@ class Post extends \Orm\Model {
 	* just get posts is actived
 	* @return the code 200 when success, 2507 when not have any result
 	*/
-	public static function get_list_post() {
+	public static function get_all_posts() {
 		try {
 			//use orm
 			$entry = Post::find('all', array('select' => array('id', 'title', 'created_at', 'modified_at')));
