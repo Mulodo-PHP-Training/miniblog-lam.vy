@@ -286,4 +286,43 @@ class Controller_V1_Post extends Controller_Rest {
 		
 		
 	}
+	
+	/**
+	 * The method get list post
+	 * @link http://localhost/v1/posts/
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_list_post() {
+		//call from model
+		$rs = Post::get_list_post();
+		if (false !== $rs) {
+			
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => SUSSCESS_CODE,
+									'message' => 'Get posts success!',
+									'result' => count($rs),
+							),
+							'data' => $rs
+					));
+			
+		} else {
+			
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => POST_GET_LIST_ERROR,
+									'description' => POST_GET_LIST_DESC,
+									'messages' => POST_GET_LIST_MSG,
+							),
+							'data' => null,
+					)
+			);
+		}
+		
+		
+	}
 }

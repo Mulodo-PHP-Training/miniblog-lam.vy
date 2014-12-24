@@ -194,4 +194,32 @@ class Post extends \Orm\Model {
 		
 		return $rs;
 	} 
+
+   /*
+	* method use to get list posts in db
+	* just get posts is actived
+	* @return the code 200 when success, 2507 when not have any result
+	*/
+	public static function get_list_post() {
+		try {
+			//use orm
+			$entry = Post::find('all', array('select' => array('id', 'title', 'created_at', 'modified_at')));
+			$entry = Post::query()->where('status', '=', '1')->get();
+			//check rs
+			if (count($entry) > 0) {
+				$data = array();
+				foreach ($entry as $item) {
+					//add data post in to array
+					$data[] = $item;
+				}
+				return $data;
+			} else {
+				return false;
+			}
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+		}
+		
+		
+	}
 }
