@@ -29,7 +29,7 @@ return array(
 	//deactive a post
 	'(:version)/posts/:post_id/active' => array(array('PUT', new Route('$1/post/active_post'))),
 	//update a post, delete post
-	'(:version)/posts/:post_id' => array(array('PUT', new Route('$1/post/update_post')), array('DELETE', new Route('$1/post/post'))),
+	'(:version)/posts/:post_id' => array(array('PUT', new Route('$1/post/update_post')), array('DELETE', new Route('$1/post/post')), array('GET', new Route('$1/post/post_info'))),
 	
 	
 	

@@ -522,4 +522,66 @@ class Test_Controller_V1_Post extends TestCase {
 		);
 		return $data;
 	}
+	
+	/**
+	 * use test to get a posts ok
+	 * method GET
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
+	 * compare with code is 200
+	 * @group get_post_ok
+	 * @dataProvider get_post_info_provider
+	 */
+	public function test_get_post_info_ok($test_data) {
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$test_data[post_id]";
+	
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals(200, $rs['meta']['code']);
+		$this->assertEquals($test_data['title'], $rs['data']['title']);
+		$this->assertEquals($test_data['created_at'], $rs['data']['created_at']);
+		$this->assertEquals($test_data['modified_at'], $rs['data']['modified_at']);
+	}
+	
+	/**
+	 * use test to get a posts not ok
+	 * method GET
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/post_id
+	 * compare with code is 2505
+	 * @group get_post_notok
+	 */
+	public function test_get_post_info_notok() {
+		$method = 'GET';
+		$id = '210';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$id";
+	
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals('2505', $rs['meta']['code']);
+	}
+	
+	/**
+	 * Define test data for test delete post
+	 *
+	 * @return array Test data
+	 */
+	public function get_post_info_provider() {
+		$data = array();
+	
+		//author_id not match
+		$data[][] = array(
+				'post_id' => '49',
+				'title' => 'title for unit testing in controller',
+				'created_at' => '1419299440',
+				'modified_at' => '1419299440'
+		);
+		//post id not exist
+		$data[][] = array(
+				'post_id' => '29',
+				'title' => 'title for unit testing in controller',
+				'created_at' => '1419214124',
+				'modified_at' => '1419214124'
+		);
+		return $data;
+	}
 }
