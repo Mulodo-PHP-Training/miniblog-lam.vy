@@ -376,12 +376,12 @@ class Controller_V1_Post extends Controller_Rest {
 	 * @access  public
 	 * @return  Response
 	 */
-	public function get_a_post() {
+	public function get_post_info() {
 		//get user id
 		$id = $this->param('post_id');
 	
 		//call from model
-		$rs = Post::get_a_post($id);
+		$rs = Post::get_post_info($id);
 	 
 		if (false !== $rs) {
 	

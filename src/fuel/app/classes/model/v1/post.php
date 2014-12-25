@@ -255,7 +255,7 @@ class Post extends \Orm\Model {
 	* just get posts is actived
 	* @return the code 200 when success, 2505 when not have any result
 	*/
-	public static function get_a_post($id) {
+	public static function get_post_info($id) {
 		try {
 			$entry = DB::query("SELECT id, title, content, created_at, modified_at FROM post WHERE status = 1 AND id = ".$id, DB::SELECT)->execute();
 				

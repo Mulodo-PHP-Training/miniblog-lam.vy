@@ -460,12 +460,12 @@ class Test_Model_V1_Post extends TestCase {
 	 * funtion to test get all posts of user ok
 	 * compare result count result is > 0
 	 * @group get_post_ok
-	 * @dataProvider get_a_post_provider
+	 * @dataProvider get_post_info_provider
 	 */
-	public function test_get_a_post_ok($test_data) {
+	public function test_get_post_info_ok($test_data) {
 	
 		//set user id
-		$rs = Post::get_a_post($test_data['post_id']);
+		$rs = Post::get_post_info($test_data['post_id']);
 	
 		//count ting the result return
 		$row = count($rs);
@@ -482,7 +482,7 @@ class Test_Model_V1_Post extends TestCase {
 	public function test_get_a_post_notok() {
 	
 		//set user id
-		$rs = Post::get_a_post('1');
+		$rs = Post::get_post_info('1');
 	
 		//compare
 		$this->assertEquals(false, $rs);
@@ -493,7 +493,7 @@ class Test_Model_V1_Post extends TestCase {
 	 *
 	 * @return array Test data
 	 */
-	public function get_a_post_provider() {
+	public function get_post_info_provider() {
 		$data = array();
 	
 		//author_id not match

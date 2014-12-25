@@ -529,9 +529,9 @@ class Test_Controller_V1_Post extends TestCase {
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}
 	 * compare with code is 200
 	 * @group get_post_ok
-	 * @dataProvider get_a_post_provider
+	 * @dataProvider get_post_info_provider
 	 */
-	public function test_get_a_posts_ok($test_data) {
+	public function test_get_post_info_ok($test_data) {
 		$method = 'GET';
 		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$test_data[post_id]";
 	
@@ -550,7 +550,7 @@ class Test_Controller_V1_Post extends TestCase {
 	 * compare with code is 2505
 	 * @group get_post_notok
 	 */
-	public function test_get_a_post_notok() {
+	public function test_get_post_info_notok() {
 		$method = 'GET';
 		$id = '210';
 		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$id";
@@ -565,7 +565,7 @@ class Test_Controller_V1_Post extends TestCase {
 	 *
 	 * @return array Test data
 	 */
-	public function get_a_post_provider() {
+	public function get_post_info_provider() {
 		$data = array();
 	
 		//author_id not match
