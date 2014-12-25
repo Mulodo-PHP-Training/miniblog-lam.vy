@@ -15,7 +15,7 @@ return array(
 	//function logout	
 	'(:version)/users/logout' => array(array('PUT', new Route('$1/user/logout'))) ,	
 	//get user info by get id param, config the param must be number
-	'(:version)/users/(:num)' => array( array('GET', new Route('$1/user/user_info2/$3'))) ,
+	'(:version)/users/(:num)' => array( array('GET', new Route('$1/user/user_info2'))) ,
 	//change the password
 	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),
 	//get all user post
