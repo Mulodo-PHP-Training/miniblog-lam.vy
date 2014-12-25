@@ -325,4 +325,47 @@ class Controller_V1_Post extends Controller_Rest {
 		
 		
 	}
+	
+	/**
+	 * The method get list post of user
+	 * @link http://localhost/v1/users/{user_id}/posts/
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_all_user_posts() {
+		//get user id
+		$user_id = $this->param('user_id');
+		
+		//call from model
+		$rs = Post::get_all_user_posts($user_id);
+		
+		if (false !== $rs) {
+				
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => SUSSCESS_CODE,
+									'message' => 'Get all posts of user success!',
+									'result' => count($rs),
+							),
+							'data' => $rs
+					));
+				
+		} else {
+			//return error if not have any result	
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => POST_GET_USER_POST_ERROR,
+									'description' => POST_GET_USER_POST_DESC,
+									'messages' => POST_GET_USER_POST_MSG,
+							),
+							'data' => null,
+					)
+			);
+		}
+	
+	
+	}
 }
