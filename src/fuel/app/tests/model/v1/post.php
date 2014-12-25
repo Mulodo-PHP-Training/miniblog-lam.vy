@@ -456,5 +456,54 @@ class Test_Model_V1_Post extends TestCase {
 		);
 		return $data;
 	}
+	/**
+	 * funtion to test get all posts of user ok
+	 * compare result count result is > 0
+	 * @group get_post_ok
+	 * @dataProvider get_a_post_provider
+	 */
+	public function test_get_a_post_ok($test_data) {
 	
+		//set user id
+		$rs = Post::get_a_post($test_data['post_id']);
+	
+		//count ting the result return
+		$row = count($rs);
+		//compare
+		$this->assertGreaterThan(0, $row);
+	
+	}
+	
+	/**
+	 * funtion to test get all posts of user not ok
+	 * compare result count result is  false
+	 * @group get_post_notok
+	 */
+	public function test_get_a_post_notok() {
+	
+		//set user id
+		$rs = Post::get_a_post('1');
+	
+		//compare
+		$this->assertEquals(false, $rs);
+	
+	}
+	/**
+	 * Define test data for test delete post
+	 *
+	 * @return array Test data
+	 */
+	public function get_a_post_provider() {
+		$data = array();
+	
+		//author_id not match
+		$data[][] = array(
+				'post_id' => '29'
+		);
+		//post id not exist
+		$data[][] = array(
+				'post_id' => '49'
+		);
+		return $data;
+	}
 }
