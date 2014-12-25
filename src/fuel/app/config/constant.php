@@ -81,3 +81,8 @@ define('POST_GET_LIST_MSG', 'Get all posts not success');
 define('POST_GET_USER_POST_ERROR', '2506');
 define('POST_GET_USER_POST_DESC', 'Can\'t get data');
 define('POST_GET_USER_POST_MSG', 'Get all posts of user failed');
+
+//get a post of user
+define('POST_GET_POST_ERROR', '2505');
+define('POST_GET_POST_DESC', 'Can\'t get data');
+define('POST_GET_POST_MSG', 'Get post failed');
