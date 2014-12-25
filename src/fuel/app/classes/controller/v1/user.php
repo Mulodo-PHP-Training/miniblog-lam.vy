@@ -5,6 +5,7 @@ use Auth\Auth;
 use Fuel\Core\Validation;
 use Fuel\Core\Security;
 use Fuel\Core\Input;
+use Fuel\Core\Uri;
 
 /**
  * The User Controller.
@@ -350,9 +351,9 @@ class Controller_V1_User extends Controller_Rest {
 	 * config the routes for /:name_param - the name of param
 	*/
 	public function get_user_info2() {
-		
-		$id = $this->param('id');
-		
+		//use segment to get param index 3 for id
+		$id = Uri::segment(3);
+			
 		//call function get user info use ORM package
 		//input id get from url
 		$result =  User::get_user_info($id);
@@ -439,6 +440,7 @@ class Controller_V1_User extends Controller_Rest {
 	public function get_search_user() {
 		//get the keyword for search
 		$name = Security::clean(Input::get('name'), $this->filters);
+		
 		//check empty
 		if (empty($name)) {
 			return $this->response(

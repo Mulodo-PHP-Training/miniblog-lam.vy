@@ -14,10 +14,13 @@ return array(
 	'(:version)/users/login' => array(array('POST', new Route('$1/user/login'))) ,
 	//function logout	
 	'(:version)/users/logout' => array(array('PUT', new Route('$1/user/logout'))) ,	
-	//get user info by get id param
-	'(:version)/users/:id' => array( array('GET', new Route('$1/user/user_info2/'))) ,
+	//get user info by get id param, config the param must be number
+	'(:version)/users/(:num)' => array( array('GET', new Route('$1/user/user_info2/$3'))) ,
 	//change the password
-	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),	
+	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),
+	//get all user post
+	'(:version)/users/:user_id/posts' => array(array('GET', new Route('$1/post/all_user_posts'))),
+	//search user by name
 	'(:version)/users(:name)?' =>  array(array('GET', new Route('$1/user/search_user'))), 
 	//--------------------------POST--------------------------------
 	'(:version)/posts' => array(array('POST', new Route('$1/post/create')), array('GET', new Route('$1/post/all_posts'))),
@@ -27,8 +30,8 @@ return array(
 	'(:version)/posts/:post_id/active' => array(array('PUT', new Route('$1/post/active_post'))),
 	//update a post, delete post
 	'(:version)/posts/:post_id' => array(array('PUT', new Route('$1/post/update_post')), array('DELETE', new Route('$1/post/post'))),
-	//get all user post
-	'(:version)/users/:user_id/posts' => array(array('GET', new Route('$1/post/all_user_posts'))),
+	
+	
 	
 );
 //the routes for use function get_user_info($id)
