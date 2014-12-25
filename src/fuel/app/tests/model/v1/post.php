@@ -406,4 +406,55 @@ class Test_Model_V1_Post extends TestCase {
 		
 	}
 	
+	/**
+	 * funtion to test get all posts of user ok
+	 * compare result count result is > 0
+	 * @group get_user_post_ok
+	 * @dataProvider get_user_post_provider
+	 */
+	public function test_get_all_user_posts_ok($test_data) {
+	
+		//set user id
+		$rs = Post::get_all_user_posts($test_data['user_id']);
+	
+		//count ting the result return
+		$row = count($rs);
+		//compare
+		$this->assertGreaterThan(0, $row);
+	
+	}
+	
+	/**
+	 * funtion to test get all posts of user not ok
+	 * compare result count result is  false
+	 * @group get_user_post_notok
+	 */
+	public function test_get_all_user_posts_notok() {
+	
+		//set user id
+		$rs = Post::get_all_user_posts('210');
+		
+		//compare
+		$this->assertEquals(false, $rs);
+	
+	}
+	/**
+	 * Define test data for test delete post
+	 *
+	 * @return array Test data
+	 */
+	public function get_user_post_provider() {
+		$data = array();
+	
+		//author_id not match
+		$data[][] = array(
+				'user_id' => '30'
+		);
+		//post id not exist
+		$data[][] = array(
+				'user_id' => '89'
+		);
+		return $data;
+	}
+	
 }
