@@ -469,4 +469,57 @@ class Test_Controller_V1_Post extends TestCase {
 		$this->assertEquals(200, $rs['meta']['code']);
 		$this->assertGreaterThan(0, $rs['meta']['result']);
 	}
+	/**
+	 * use test to get all user posts ok
+	 * method GET
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/users/{user_id}/posts
+	 * compare with code is 200, result return  > 0
+	 * @group get_user_post_ok
+	 * @dataProvider get_user_post_provider
+	 */
+	public function test_get_all_user_posts_ok($test_data) {
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$test_data[user_id]/posts";
+	
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals(200, $rs['meta']['code']);
+		$this->assertGreaterThan(0, $rs['meta']['result']);
+	}
+	
+	/**
+	 * use test to get all user posts not ok
+	 * method GET
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/users/{user_id}/posts
+	 * compare with code is 2506
+	 * @group get_user_post_notok
+	 */
+	public function test_get_all_user_posts_notok() {
+		$method = 'GET';
+		$user_id = '210';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$user_id/posts";
+	
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals('2506', $rs['meta']['code']);
+	}
+	
+	/**
+	 * Define test data for test delete post
+	 *
+	 * @return array Test data
+	 */
+	public function get_user_post_provider() {
+		$data = array();
+	
+		//author_id not match
+		$data[][] = array(
+				'user_id' => '30'
+		);
+		//post id not exist
+		$data[][] = array(
+				'user_id' => '89'
+		);
+		return $data;
+	}
 }
