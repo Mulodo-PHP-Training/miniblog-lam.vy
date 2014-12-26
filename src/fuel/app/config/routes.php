@@ -25,7 +25,7 @@ return array(
 	//--------------------------POST--------------------------------
 	'(:version)/posts' => array(array('POST', new Route('$1/post/create')), array('GET', new Route('$1/post/all_posts'))),
 	//comment
-	'(:version)/posts/:post_id/comments' => array(array('POST', new Route('$1/comment/comment'))),
+	'(:version)/posts/:post_id/comments' => array(array('POST', new Route('$1/comment/create_comment'))),
 		
 		
 	//deactive a post
