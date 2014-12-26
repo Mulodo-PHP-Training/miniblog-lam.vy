@@ -30,7 +30,7 @@ class Controller_V1_Comment extends Controller_Rest {
 	 * @access  public
 	 * @return  Response
 	 */
-	public function post_comment() {
+	public function post_create_comment() {
 		//check token 
 		$token = Security::clean(Input::post('token'), $this->filters);
 		
