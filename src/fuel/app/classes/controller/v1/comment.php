@@ -41,7 +41,7 @@ class Controller_V1_Comment extends Controller_Rest {
 					'meta' => array(
 							'code' => TOKEN_NULL_ERROR ,
 							'description' => TOKEN_NULL_DESC ,
-							'messages' => 'TOKEN_NULL_MSG',
+							'messages' => TOKEN_NULL_MSG,
 					) ,
 					'data' => null,
 			));
@@ -51,7 +51,7 @@ class Controller_V1_Comment extends Controller_Rest {
 			$rs = User::check_token($token);
 			if (is_numeric($rs) && $rs > 0) {
 				//data of comment
-				$data['token'] = $token;
+				
 				//get post id from segment
 				$data['post_id'] = Uri::segment(3);
 				$data['content'] = Security::clean(Input::post('content'), $this->filters);
