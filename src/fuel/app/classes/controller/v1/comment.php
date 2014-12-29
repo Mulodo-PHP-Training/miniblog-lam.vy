@@ -70,5 +70,52 @@ class Controller_V1_Comment extends Controller_Rest {
 		}
 		
 	}
-
+	
+	/**
+	 * The method edit comment of a post
+	 * @link http://localhost/v1/posts/{post_id}/comments/{comment_id}
+	 * @method : PUT
+	 * @access  public
+	 * @return  Response
+	 */
+	public function put_update_comment(){
+		//get token
+		$token = Security::clean(Input::put('token'), $this->filters);
+		//check token
+		if (empty($token)) {
+			
+			
+		} else {
+			
+			//check token valid
+			$rs = User::check_token($token);
+			
+			if (is_numeric($rs) && $rs >0) {
+				//edit comment
+				$data['comment_id'] = Uri::segment(5);
+				$data['content'] = Security::clean(Input::put('content'), $this->filters);
+				$data['author_id'] = $rs;
+				$result = Comment::update_comment($data);
+				if (false !== $result) {
+					
+					return $this->response($result);
+					
+				} else {
+					return $this->response(
+							array(
+									'meta' => array(
+											'code' => COMMENT_VALIDATE_ERROR ,
+											'description' => COMMENT_VALIDATE_DSC ,
+											'messages' => COMMENT_VALIDATE_MSG
+									),
+									'data' => null
+							)
+					);
+				}
+			} else {
+				return $this->response($rs);
+			}
+		}
+		
+	}
 }

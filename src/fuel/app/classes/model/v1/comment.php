@@ -97,4 +97,61 @@ class Comment extends \Orm\Model {
 		}
 		
 	}
+	
+	/*
+	* method use to update a comment
+	* @param input data  include comment_id, author_id, content
+	* @return array data of the comment updated
+	*/
+	public static function update_comment($data) {
+		
+		//check content not empty
+		if (!empty($data['content'])) {				
+			try {
+				
+				$time = time();
+				
+				$row = DB::update('comment')->set(
+							array(									
+									'content' => $data['content'],
+									'modified_at' => $time
+							))->where('id', $data['comment_id'])->where('author_id', $data['author_id'])->execute();	
+				if ($row > 0) {
+					//get info of post
+					$data = DB::select('id', 'post_id', 'author_id', 'content', 'created_at', 'modified_at')
+					->from('comment')
+					->where('id', '=', $data['comment_id'])
+					->execute();
+					//return data of the comment updated
+					return array(
+							'meta' => array(
+									'code' => SUSSCESS_CODE,
+									'messages' => 'Update comment success!'
+							),
+							'data' =>$data[0]
+					);
+						
+				} else {
+					//return failed
+						return array(
+								'meta' => array(
+										'code' => COMMENT_EDIT_ERROR,
+										'description' => COMMENT_EDIT_DSC,
+										'messages' => COMMENT_EDIT_MSG
+								),
+								'data' => null
+								);
+					
+				}
+				
+			} catch(\Exception $ex) {
+				Log::error($ex->getMessage());
+				return $ex->getMessage();
+			}
+			
+		} else {
+			//return false for content null
+			return false;
+		}
+	}
 }

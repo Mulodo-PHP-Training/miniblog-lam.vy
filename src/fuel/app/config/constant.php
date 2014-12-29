@@ -94,7 +94,11 @@ define('POST_GET_POST_MSG', 'Get post failed');
 define('COMMENT_VALIDATE_ERROR', '1003');
 define('COMMENT_VALIDATE_DSC', 'Input validation failed');
 define('COMMENT_VALIDATE_MSG', 'Content of comment must be filled in');
-
+//add
 define('COMMENT_ADD_ERROR', '3001');
 define('COMMENT_ADD_DSC', 'The post id not exist or Access is denied');
 define('COMMENT_ADD_MSG', 'Can\'t post your comment');
+//edit
+define('COMMENT_EDIT_ERROR', '3002');
+define('COMMENT_EDIT_DSC', 'The comment id not exist or Access is denied');
+define('COMMENT_EDIT_MSG', 'Update your comment failed');

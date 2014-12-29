@@ -74,7 +74,7 @@ class Test_Model_V1_Comment extends TestCase {
 	 * @group create_comment_ok
 	 *
 	 */
-	public function test_create_post() {
+	public function test_create_comment() {
 		//create data
 		
 		$data = array(
@@ -87,6 +87,8 @@ class Test_Model_V1_Comment extends TestCase {
 		$this->assertGreaterThan(0, $rs['data']['id']);
 		$this->assertEquals($data['author_id'], $rs['data']['author_id']);
 		$this->assertEquals($data['post_id'], $rs['data']['post_id']);
+		
+		return $rs['data']['id'];
 	}
 	
 	/**
@@ -96,7 +98,7 @@ class Test_Model_V1_Comment extends TestCase {
 	 * @group create_comment_notok
 	 *
 	 */
-	public function test_create_post_empty() {
+	public function test_create_comment_empty() {
 		//create data
 	
 		$data = array(
@@ -115,7 +117,7 @@ class Test_Model_V1_Comment extends TestCase {
 	 * @group create_comment_notok
 	 *
 	 */
-	public function test_create_post_notok() {
+	public function test_create_comment_notok() {
 		//create data
 	
 		$data = array(
@@ -125,6 +127,66 @@ class Test_Model_V1_Comment extends TestCase {
 		);
 		$rs = Comment::create_comment($data);
 		$this->assertEquals('3001', $rs['meta']['code']);
+	
+	}
+	
+	/**
+	 * use test update the comment is ok
+	 * method POST
+	 * compare with code is 200
+	 * @group update_comment_ok
+	 * @depends test_create_comment
+	 */
+	public function test_update_comment($comment_id) {
+		//create data
+	
+		$data = array(
+				'author_id' => self::$user['id'],
+				'comment_id' => $comment_id,
+				'content' => 'update comment '.$comment_id.' test in model',
+		);
+		$rs = Comment::update_comment($data);
+		$this->assertEquals('200', $rs['meta']['code']);
+		$this->assertGreaterThan(0, $rs['data']['id']);
+		$this->assertEquals($data['author_id'], $rs['data']['author_id']);
+	}
+	
+	/**
+	 * use test update the comment is not ok, content null
+	 * method POST
+	 * compare with code is 1003
+	 * @group update_comment_notok
+	 * @depends test_create_comment
+	 */
+	public function test_update_comment_empty($comment_id) {
+		//create data
+	
+		$data = array(
+				'author_id' => self::$user['id'],
+				'comment_id' => $comment_id,
+				'content' => '',
+		);
+		$rs = Comment::create_comment($data);
+		$this->assertEquals('1003', $rs['meta']['code']);
+	
+	}
+	
+	/**
+	 * use test update the comment is not ok, comment_id not exist
+	 * compare with code is 3002
+	 * @group update_comment_notok
+	 *
+	 */
+	public function test_update_comment_notok() {
+		//create data
+	
+		$data = array(
+				'author_id' => self::$user['id'],
+				'comment_id' => '0',
+				'content' => 'test update comment in model comment id not exist',
+		);
+		$rs = Comment::update_comment($data);
+		$this->assertEquals('3002', $rs['meta']['code']);
 	
 	}
 	
