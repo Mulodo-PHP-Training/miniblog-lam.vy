@@ -75,13 +75,13 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * @group create_comment_ok
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments
 	 */
-	public function test_create_post() {
+	public function test_create_comment() {
 		//create data
 	
 		$data = array(
 				'token' => self::$user['token'],
 				'post_id' => '49',
-				'content' => 'update comment test in model',
+				'content' => 'update comment test in controller',
 		);
 		$method = 'POST';
 		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments";
@@ -90,6 +90,8 @@ class Test_Controller_V1_Comment extends TestCase {
 		$this->assertEquals('200', $rs['meta']['code']);
 		$this->assertGreaterThan(0, $rs['data']['id']);
 		$this->assertEquals($data['post_id'], $rs['data']['post_id']);
+		
+		return $rs['data']['id'];
 	}
 	
 	/**
@@ -100,7 +102,7 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments
 	 *
 	 */
-	public function test_create_post_empty() {
+	public function test_create_comment_empty() {
 		//create data
 	
 		$data = array(
@@ -123,13 +125,13 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * @group create_comment_notok
 	 *
 	 */
-	public function test_create_post_notok() {
+	public function test_create_comment_notok() {
 		//create data
 	
 		$data = array(
 				'token' => self::$user['token'],
 				'post_id' => '39',
-				'content' => 'test post comment in model',
+				'content' => 'test comment comment in controller',
 		);
 		$method = 'POST';
 		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments";
@@ -138,6 +140,85 @@ class Test_Controller_V1_Comment extends TestCase {
 		$this->assertEquals('3001', $rs['meta']['code']);
 	
 	}
+	
+
+	/**
+	 * use test update the comment is ok
+	 * method PUT
+	 * compare with code is 200
+	 * @group update_comment_ok
+	 * @depends test_create_comment
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 */
+	public function test_update_comment($comment_id) {
+		//create data
+	
+		$data = array(
+				'token' => self::$user['token'],
+				'comment_id' => $comment_id,
+				'post_id' => '49',
+				'content' => 'update comment '.$comment_id.' test in controller',
+		);
+		$method = 'PUT';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+	
+		$this->assertEquals('200', $rs['meta']['code']);
+		$this->assertEquals($data['comment_id'], $rs['data']['id']);
+	}
+	
+	/**
+	 * use test update the comment is not ok, content null
+	 * method PUT
+	 * compare with code is 1003
+	 * @group update_comment_notok
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 * @depends test_create_comment
+	 */
+	public function test_update_comment_empty($comment_id) {
+		//create data
+	
+		$data = array(
+				'token' => self::$user['token'],
+				'post_id' => '49',
+				'comment_id' => $comment_id,
+				'content' => '',
+		);
+		$method = 'PUT';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+	
+		$this->assertEquals('1003', $rs['meta']['code']);
+	
+	}
+	/**
+	 * use test update the comment is not ok, comment_id not exist
+	 * method PUT
+	 * compare with code is 3002
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 * @group update_comment_notok
+	 *
+	 */
+	public function test_update_comment_notok() {
+		//create data
+	
+		$data = array(
+				'token' => self::$user['token'],
+				'post_id' => '49',
+				'comment_id' => '0',
+				'content' => 'test comment comment in controller',
+		);
+		$method = 'PUT';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+		
+	  	//compare with error code comment_id not exist
+		$this->assertEquals('3002', $rs['meta']['code']);
+	
+	}
+	
+	
+	
 	/**
 	 * function to init curl used to api
 	 * set method, link for request
