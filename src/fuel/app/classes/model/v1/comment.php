@@ -162,7 +162,7 @@ class Comment extends \Orm\Model {
 	* @return true or false
 	*/
 	
-	public static function check_user($post_id, $comment_id, $author_id) {
+	public static function is_deletable($post_id, $comment_id, $author_id) {
 		try {
 			$query = DB::query("SELECT author_id FROM post WHERE id = $post_id UNION SELECT author_id FROM comment WHERE id = $comment_id ")->execute();
 			//print_r($query[0]['author_id']); die;

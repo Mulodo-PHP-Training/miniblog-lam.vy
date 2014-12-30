@@ -156,9 +156,9 @@ class Controller_V1_Comment extends Controller_Rest {
 			if (is_numeric($rs) && $rs > 0) {
 				$author_id = $rs; 
 				//check permission for delete, the owner of post or comment id can be del it
-				$check = Comment::check_user($post_id, $comment_id, $author_id);
+				$deletable = Comment::is_deletable($post_id, $comment_id, $author_id);
 				//var_dump($check); die;
-				if (true == $check) {
+				if (true == $deletable) {
 					//delete comment
 					$result = Comment::delete_comment($comment_id);
 					return $this->response($result);
