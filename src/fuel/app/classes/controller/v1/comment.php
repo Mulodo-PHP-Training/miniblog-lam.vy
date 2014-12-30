@@ -84,7 +84,16 @@ class Controller_V1_Comment extends Controller_Rest {
 		//check token
 		if (empty($token)) {
 			
-			
+			//return error 1202 token invalid
+			return $this->response(array(
+					'meta' => array(
+							'code' => TOKEN_NULL_ERROR ,
+							'description' => TOKEN_NULL_DESC ,
+							'messages' => TOKEN_NULL_MSG,
+					) ,
+					'data' => null,
+			));
+				
 		} else {
 			
 			//check token valid
@@ -117,5 +126,60 @@ class Controller_V1_Comment extends Controller_Rest {
 			}
 		}
 		
+	}
+	
+	/**
+	 * The method delete comment of a post
+	 * @link http://localhost/v1/posts/{post_id}/comments/{comment_id}
+	 * @method : DELETE
+	 * @access  public
+	 * @return  Response
+	 */
+	public function delete_comment() {
+		$post_id = Uri::segment(3);
+		$comment_id = Uri::segment(5);
+		$token = Security::clean(Input::delete('token'), $this->filters);
+		if (empty($token)) {
+
+			//return error 1202 token invalid
+			return $this->response(array(
+					'meta' => array(
+							'code' => TOKEN_NULL_ERROR ,
+							'description' => TOKEN_NULL_DESC ,
+							'messages' => TOKEN_NULL_MSG,
+					) ,
+					'data' => null,
+			));
+		} else {
+			//check token
+			$rs = User::check_token($token);
+			if (is_numeric($rs) && $rs > 0) {
+				$author_id = $rs; 
+				//check permission for delete, the owner of post or comment id can be del it
+				$check = Comment::check_user($post_id, $comment_id, $author_id);
+				//var_dump($check); die;
+				if (true == $check) {
+					//delete comment
+					$result = Comment::delete_comment($comment_id);
+					return $this->response($result);
+				
+				} else {
+					return $this->response(
+						array(
+						    'meta' => array(
+						              'code' => COMMENT_DEL_ERROR,
+						    		  'description' => COMMENT_DEL_DSC,
+						    		  'messages' => COMMENT_DEL_MSG
+				 	         ),
+							'data' => null
+					)
+					);
+				}
+			} else {
+				return $this->response($rs);
+			}
+		}
+		
+		return $this->response($post_id);
 	}
 }
