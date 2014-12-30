@@ -108,6 +108,6 @@ define('COMMENT_DEL_DSC', 'The comment id not exist');
 define('COMMENT_DEL_MSG', 'Delete comment failed');
 
 //not permission delete
-define('COMMENT_DEL_PER_ERROR', '3004');
-define('COMMENT_DEL_PER_DSC', 'You don\'t have permission to execute');
-define('COMMENT_DEL_PER_MSG', 'Delete comment failed');
+define('COMMENT_DEL_PERMISSION_ERROR', '3004');
+define('COMMENT_DEL_PERMISSION_DSC', 'You don\'t have permission to execute');
+define('COMMENT_DEL_PERMISSION_MSG', 'Delete comment failed');
