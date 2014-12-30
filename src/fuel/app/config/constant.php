@@ -102,3 +102,12 @@ define('COMMENT_ADD_MSG', 'Can\'t post your comment');
 define('COMMENT_EDIT_ERROR', '3002');
 define('COMMENT_EDIT_DSC', 'The comment id not exist or Access is denied');
 define('COMMENT_EDIT_MSG', 'Update your comment failed');
+//delete
+define('COMMENT_DEL_ERROR', '3003');
+define('COMMENT_DEL_DSC', 'The comment id not exist');
+define('COMMENT_DEL_MSG', 'Delete comment failed');
+
+//not permission delete
+define('COMMENT_DEL_PERMISSION_ERROR', '3004');
+define('COMMENT_DEL_PERMISSION_DSC', 'You don\'t have permission to execute');
+define('COMMENT_DEL_PERMISSION_MSG', 'Delete comment failed');

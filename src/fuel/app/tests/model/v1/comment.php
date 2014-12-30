@@ -189,5 +189,84 @@ class Test_Model_V1_Comment extends TestCase {
 		$this->assertEquals('3002', $rs['meta']['code']);
 	
 	}
+	/**
+	 * use test is_deletable is ok
+	 * return true
+	 * compare with true
+	 * @group is_deletable_ok
+	 * @dataProvider is_deletable_ok_provider
+	 */
+	public function test_is_deletable_ok($data) {
+		
+		$rs = Comment::is_deletable($data['post_id'], $data['comment_id'], $data['author_id']);
+		$this->assertTrue($rs);
+	
+	}
+	/**
+	 * use test is_deletable is not ok
+	 * the author_id not owner of post or comment
+	 * compare with false
+	 * @group is_deletable_notok
+	 */
+	public function test_is_deletable_notok() {
+	
+		$data = array(
+				'author_id' => '0',
+				'post_id' => '49',
+				'comment_id' => '16'
+				);
+		$rs = Comment::is_deletable($data['post_id'], $data['comment_id'], $data['author_id']);
+		$this->assertFalse($rs);
+	
+	}
+	
+	/**
+	 * use test delete comment  ok
+	 * compare with code 200
+	 * @group delete_comment_ok
+	 * @depends test_create_comment
+	 */
+	public function test_delete_comment_ok($comment_id) {
+		
+		$rs = Comment::delete_comment($comment_id);
+		$this->assertEquals('200', $rs['meta']['code']);
+	
+	}
+	
+	/**
+	 * use test delete comment  ok
+	 * compare with code 200
+	 * @group delete_comment_ok
+	 */
+	public function test_delete_comment_notok() {
+	
+		$rs = Comment::delete_comment(0);
+		$this->assertEquals('3003', $rs['meta']['code']);
+	
+	}
+	
+	/**
+	 * Define test data for test is_deletable ok
+	 *
+	 * @return array Test data
+	 */
+	public function is_deletable_ok_provider() {
+		$test_data = array();
+		//owner the comment
+		$test_data[][] = array(
+			'author_id' => '210',
+			'post_id' => '49',
+			'comment_id' => '16'
+		);
+		//owner of the post
+		
+		$test_data[][] = array(
+			'author_id' => '89',
+			'post_id' => '49',
+			'comment_id' => '16'
+		);
+		
+		return $test_data;
+	}
 	
 }

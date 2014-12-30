@@ -154,4 +154,68 @@ class Comment extends \Orm\Model {
 			return false;
 		}
 	}
+	
+   /*
+	* method use to check user have permission for delete a comment
+	* owner of the post or comment can be remove it
+	* @param input data  include post_id, comment_id, author_id
+	* @return true or false
+	*/
+	
+	public static function is_deletable($post_id, $comment_id, $author_id) {
+		try {
+			$query = DB::query("SELECT author_id FROM post WHERE id =:post_id UNION SELECT author_id FROM comment WHERE id =:comment_id ");
+			$query->bind('post_id', $post_id);
+			$query->bind('comment_id', $comment_id);
+			$data = $query->execute();
+			
+			//print_r($query[0]['author_id']); die;
+			$rs = false;
+			for ($i = 0; $i < count($data); $i++) {
+				if ($data[$i]['author_id'] == $author_id) {
+					$rs = true;
+				}
+				
+			} 
+			return $rs;
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+			return $ex->getMessage();
+		}
+	}
+	
+   /*
+    * method use to delete a comment
+    * @param input is comment_id
+	* @return success code is 200 and message
+	*/
+	public static function delete_comment($comment_id) {
+		try {
+			$entry = DB::delete('comment')->where('id', '=', $comment_id)->execute();
+			if ($entry == 1) {
+				$rs = array(
+						'meta' => array(
+								'code' => SUSSCESS_CODE,
+								'messages' => 'Delete comment success!'
+						),
+						'data' => null
+				);
+					
+			} else {
+				$rs = array(
+						    'meta' => array(
+						              'code' => COMMENT_DEL_ERROR,
+						    		  'description' => COMMENT_DEL_DSC,
+						    		  'messages' => COMMENT_DEL_MSG
+				 	         ),
+							'data' => null
+					);
+			}
+			return $rs;
+			
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+		}
+	}
+	
 }

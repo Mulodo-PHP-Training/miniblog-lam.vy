@@ -91,7 +91,7 @@ class Test_Controller_V1_Comment extends TestCase {
 		$this->assertGreaterThan(0, $rs['data']['id']);
 		$this->assertEquals($data['post_id'], $rs['data']['post_id']);
 		
-		return $rs['data']['id'];
+		return $rs['data'];
 	}
 	
 	/**
@@ -150,14 +150,14 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * @depends test_create_comment
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
 	 */
-	public function test_update_comment($comment_id) {
+	public function test_update_comment($comment) {
 		//create data
 	
 		$data = array(
 				'token' => self::$user['token'],
-				'comment_id' => $comment_id,
+				'comment_id' => $comment['id'],
 				'post_id' => '49',
-				'content' => 'update comment '.$comment_id.' test in controller',
+				'content' => 'update comment '.$comment['id'].' test in controller',
 		);
 		$method = 'PUT';
 		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
@@ -175,13 +175,13 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
 	 * @depends test_create_comment
 	 */
-	public function test_update_comment_empty($comment_id) {
+	public function test_update_comment_empty($comment) {
 		//create data
 	
 		$data = array(
 				'token' => self::$user['token'],
 				'post_id' => '49',
-				'comment_id' => $comment_id,
+				'comment_id' => $comment['id'],
 				'content' => '',
 		);
 		$method = 'PUT';
@@ -217,7 +217,82 @@ class Test_Controller_V1_Comment extends TestCase {
 	
 	}
 	
+	/**
+	 * use test delete comment is ok
+	 * method DELETE
+	 * compare with code is 200
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 * @group delete_comment_ok
+	 * @depends test_create_comment
+	 */
+	public function test_delete_comment_ok($comment) {
+		//create data
 	
+		$data = array(
+				'token' => self::$user['token'],
+				'post_id' => $comment['post_id'],
+				'comment_id' => $comment['id'],
+				
+		);
+		$method = 'DELETE';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+		
+	  	//compare with error code comment_id not exist
+		$this->assertEquals('200', $rs['meta']['code']);
+	 
+	}
+	
+	/**
+	 * use test delete comment is not ok
+	 * method DELETE
+	 * compare with code is 3003 b/c comment id not exist
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 * @group delete_comment_notok
+	 */
+	public function test_delete_comment_notok() {
+		//create data
+	    //the comment not exist
+	    //return error code 3004
+		$data = array(
+				'token' => self::$user['token'],
+				'post_id' => '49',
+				'comment_id' => '0',
+	
+		);
+		$method = 'DELETE';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+	
+		//compare with error code comment_id not exist
+		$this->assertEquals('3003', $rs['meta']['code']);
+	
+	}
+	/**
+	 * use test is_deletable not ok
+	 * method DELETE
+	 * compare with code is 3004 b/c access is denied
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments/{comment_id}
+	 * @group delete_comment_notok
+	 */
+	public function test_is_deletable_notok() {
+		//create data
+		//the user logged is not owner of comment or post
+		//return error code 3004
+		$data = array(
+				'token' => self::$user['token'],
+				'post_id' => '0',
+				'comment_id' => '0',
+	
+		);
+		$method = 'DELETE';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+		$rs = $this->init_curl($data, $method, $link);
+	
+		//compare with error code comment_id not exist
+		$this->assertEquals('3004', $rs['meta']['code']);
+	
+	}
 	
 	/**
 	 * function to init curl used to api

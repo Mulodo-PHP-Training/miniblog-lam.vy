@@ -27,7 +27,7 @@ return array(
 	
 	//comment
 	//edit comment
-	'(:version)/posts/:num/comments/:num' => array(array('PUT', new Route('$1/comment/update_comment'))),
+	'(:version)/posts/:num/comments/:num' => array(array('PUT', new Route('$1/comment/update_comment')), array('DELETE', new Route('$1/comment/comment'))),
 	//add comment
 	'(:version)/posts/:post_id/comments' => array(array('POST', new Route('$1/comment/create_comment'))),
 		
