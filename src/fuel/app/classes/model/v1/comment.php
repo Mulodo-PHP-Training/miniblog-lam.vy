@@ -188,15 +188,26 @@ class Comment extends \Orm\Model {
 	public static function delete_comment($comment_id) {
 		try {
 			$entry = DB::delete('comment')->where('id', '=', $comment_id)->execute();
-			
-			return  array(
-								'meta' => array(
-										'code' => SUSSCESS_CODE,
-										'messages' => 'Delete comment success!'
-								),
-								'data' => null
-						        );
-			
+			if ($entry == 1) {
+				$rs = array(
+						'meta' => array(
+								'code' => SUSSCESS_CODE,
+								'messages' => 'Delete comment success!'
+						),
+						'data' => null
+				);
+					
+			} else {
+				$rs = array(
+						    'meta' => array(
+						              'code' => COMMENT_DEL_ERROR,
+						    		  'description' => COMMENT_DEL_DSC,
+						    		  'messages' => COMMENT_DEL_MSG
+				 	         ),
+							'data' => null
+					);
+			}
+			return $rs;
 			
 		} catch (\Exception $ex) {
 			Log::error($ex->getMessage());

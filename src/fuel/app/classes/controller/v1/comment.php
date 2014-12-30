@@ -167,9 +167,9 @@ class Controller_V1_Comment extends Controller_Rest {
 					return $this->response(
 						array(
 						    'meta' => array(
-						              'code' => COMMENT_DEL_ERROR,
-						    		  'description' => COMMENT_DEL_DSC,
-						    		  'messages' => COMMENT_DEL_MSG
+						              'code' => COMMENT_DEL_PER_ERROR,
+						    		  'description' => COMMENT_DEL_PER_DSC,
+						    		  'messages' => COMMENT_DEL_PER_MSG
 				 	         ),
 							'data' => null
 					)
