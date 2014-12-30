@@ -164,11 +164,15 @@ class Comment extends \Orm\Model {
 	
 	public static function is_deletable($post_id, $comment_id, $author_id) {
 		try {
-			$query = DB::query("SELECT author_id FROM post WHERE id = $post_id UNION SELECT author_id FROM comment WHERE id = $comment_id ")->execute();
+			$query = DB::query("SELECT author_id FROM post WHERE id =:post_id UNION SELECT author_id FROM comment WHERE id =:comment_id ");
+			$query->bind('post_id', $post_id);
+			$query->bind('comment_id', $comment_id);
+			$data = $query->execute();
+			
 			//print_r($query[0]['author_id']); die;
 			$rs = false;
-			for ($i = 0; $i < count($query); $i++) {
-				if ($query[$i]['author_id'] == $author_id) {
+			for ($i = 0; $i < count($data); $i++) {
+				if ($data[$i]['author_id'] == $author_id) {
 					$rs = true;
 				}
 				
