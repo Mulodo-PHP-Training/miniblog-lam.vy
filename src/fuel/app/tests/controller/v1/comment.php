@@ -295,6 +295,46 @@ class Test_Controller_V1_Comment extends TestCase {
 	}
 	
 	/**
+	 * use test get all comments of post ok
+	 * method GET
+	 * compare with code is 200 , result return greater than 0
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments
+	 * @group get_all_post_comment
+	 */
+	public function test_get_all_post_comments() {
+		//post id exist in db
+		$post_id = 49;
+		
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$post_id/comments";
+		
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals('200', $rs['meta']['code']);
+		$this->assertGreaterThan(0, $rs['meta']['result']);
+		
+	}
+	
+	/**
+	 * use test get all comments of post not ok
+	 * method GET
+	 * compare with code is 3005 
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments
+	 * @group get_all_post_comment
+	 */
+	public function test_get_all_post_comments_notok() {
+		//post id not exist in db use test
+		$post_id = 0;
+		
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$post_id/comments";
+		
+		$rs = $this->init_curl(null, $method, $link);
+		//compare
+		$this->assertEquals('3005', $rs['meta']['code']);
+	}
+	
+	/**
 	 * function to init curl used to api
 	 * set method, link for request
 	 * get result from response

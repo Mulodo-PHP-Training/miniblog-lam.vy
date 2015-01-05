@@ -268,5 +268,36 @@ class Test_Model_V1_Comment extends TestCase {
 		
 		return $test_data;
 	}
+
+	/**
+	 * use test get comments of post  ok
+	 * compare with count result > 0
+	 * @group get_all_post_comment
+	 * 
+	 */
+	public function test_get_all_post_comments_ok() {
+	
+		$post_id = 49;
+		$rs = Comment::get_all_post_comments($post_id);
+		$dem = count($rs);
+		$this->assertGreaterThan(0, $dem);
+	
+	}
+	
+	/**
+	 * use test get comments of post not ok
+	 * compare with false
+	 * @group get_all_post_comment
+	 *
+	 */
+	public function test_get_all_post_comments_notok() {
+	
+		$post_id = 0;//post id not exist in db
+		
+		$rs = Comment::get_all_post_comments($post_id);
+		//compare with false if not have any result returned
+		$this->assertEquals(false, $rs);
+	
+	}
 	
 }
