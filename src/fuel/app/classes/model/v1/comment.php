@@ -247,30 +247,4 @@ class Comment extends \Orm\Model {
 		}
 	}
 	
-	/*
-	* method use to get all comments of a author_id
-	* @param input is author_id
-	* @return code is 200 when get success
-	* else return code is 3006 and error message
-	*/
-	
-	public static function get_all_user_comments($author_id) {
-		try {
-			//select comment writen by author_id
-			$rs = DB::select('id', 'content', 'post_id', 'created_at', 'modified_at')
-			          ->from('comment')
-			          ->where('author_id', '=', $author_id)
-			          ->execute();
-			
-			if (count($rs) > 0) {
-				return $rs;
-			} else {
-				
-				return false;
-			}
-		} catch (\Exception $ex) {
-			Log::error($ex->getMessage());
-			return $ex->getMessage();
-		}
-	}
 }
