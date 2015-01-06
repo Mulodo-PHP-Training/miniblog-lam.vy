@@ -116,7 +116,7 @@ define('COMMENT_POST_GET_ERROR', '3005');
 define('COMMENT_POST_GET_DSC', 'Not have any comment');
 define('COMMENT_POST_GET_MSG', 'Can\'t get all comments of the post');
 
-//get all user comments
-define('COMMENT_USER_GET_ERROR', '3005');
-define('COMMENT_USER_GET_DSC', 'Don\'t have any comment');
-define('COMMENT_USER_GET_MSG', 'Not have any result.');
+//get all comments of user
+define('COMMENT_USER_GET_ERROR', '3006');
+define('COMMENT_USER_GET_DSC', 'Not have any result for search');
+define('COMMENT_USER_GET_MSG', 'Not have any comments');
