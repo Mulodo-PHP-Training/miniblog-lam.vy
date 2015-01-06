@@ -218,4 +218,33 @@ class Comment extends \Orm\Model {
 		}
 	}
 	
+	/*
+	* method use to get all comments of a post_id
+	* @param input is post_id
+	* @return code is 200 when get success
+	* else return code is 3005 and error message
+	*/
+	public static function get_all_post_comments($post_id) {
+		try {
+			//select comments
+			$rs = DB::select('id', 'content', 'author_id', 'created_at', 'modified_at')
+			          ->from('comment')
+			          ->where('post_id', '=', $post_id)
+			          ->execute();
+			
+			if (count($rs) > 0) {
+				
+				return $rs;
+			} else {
+				
+				return false;
+			}
+			
+			
+		} catch(\Exception $ex) {
+			Log::error($ex->getMessage());
+			return $ex->getMessage();
+		}
+	}
+	
 }

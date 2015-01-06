@@ -8,6 +8,7 @@ use Fuel\Core\Validation;
 use Fuel\Core\Security;
 use Fuel\Core\Input;
 use Fuel\Core\Uri;
+use Oil\Command;
 
 /**
  * The Comment Controller.
@@ -181,5 +182,43 @@ class Controller_V1_Comment extends Controller_Rest {
 		}
 		
 		return $this->response($post_id);
+	}
+	/**
+	 * The method get all comments of a post
+	 * @link http://localhost/v1/posts/{post_id}/comments
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_all_post_comments() {
+		
+		//get post id
+		$post_id = $this->param('post_id');
+		
+		$rs = Comment::get_all_post_comments($post_id);
+		if (false !== $rs) {
+			//return error array
+			return $this->response(
+					array(
+					'meta' => array(
+							'code' => '200',
+							'messages' => 'Get all comments of post success !',
+							'result' => count($rs)
+					),
+					'data' =>$rs
+			));
+			
+		} else {
+			//return error array
+			return $this->response(array(
+					'meta' => array(
+							'code' => COMMENT_POST_GET_ERROR ,
+							'description' => COMMENT_POST_GET_DSC ,
+							'messages' => COMMENT_POST_GET_MSG,
+					),
+					'data' => null,
+			));
+			
+		}
 	}
 }

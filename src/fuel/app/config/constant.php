@@ -111,3 +111,7 @@ define('COMMENT_DEL_MSG', 'Delete comment failed');
 define('COMMENT_DEL_PERMISSION_ERROR', '3004');
 define('COMMENT_DEL_PERMISSION_DSC', 'You don\'t have permission to execute');
 define('COMMENT_DEL_PERMISSION_MSG', 'Delete comment failed');
+//get all post_comments
+define('COMMENT_POST_GET_ERROR', '3005');
+define('COMMENT_POST_GET_DSC', 'Not have any comment');
+define('COMMENT_POST_GET_MSG', 'Can\'t get all comments of the post');
