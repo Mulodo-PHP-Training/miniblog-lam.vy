@@ -20,8 +20,10 @@ return array(
 	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),
 	//get all user post
 	'(:version)/users/:user_id/posts' => array(array('GET', new Route('$1/post/all_user_posts'))),
+
 	//get all comments of user id
     '(:version)/users/:user_id/comments' => array(array('GET', new Route('$1/comment/all_user_comments'))),
+
 	//search user by name
 	'(:version)/users(:name)?' =>  array(array('GET', new Route('$1/user/search_user'))), 
 	//--------------------------POST--------------------------------

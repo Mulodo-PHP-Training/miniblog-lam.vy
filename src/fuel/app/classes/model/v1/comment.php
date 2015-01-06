@@ -246,9 +246,9 @@ class Comment extends \Orm\Model {
 			return $ex->getMessage();
 		}
 	}
-	
+
 	/*
-	 * method use to get all comments of a author_id
+	* method use to get all comments of a author_id
 	* @param input is author_id
 	* @return code is 200 when get success
 	* else return code is 3006 and error message
@@ -275,4 +275,5 @@ class Comment extends \Orm\Model {
 			return $ex->getMessage();
 		}
 	}
+
 }

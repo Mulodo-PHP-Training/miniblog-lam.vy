@@ -221,7 +221,7 @@ class Controller_V1_Comment extends Controller_Rest {
 			
 		}
 	}
-	
+
 	
 	/**
 	 * The method get all comments of user id
@@ -281,4 +281,5 @@ class Controller_V1_Comment extends Controller_Rest {
 		}
 		
 	}
+
 }
