@@ -301,7 +301,7 @@ class Test_Controller_V1_Comment extends TestCase {
 	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/{post_id}/comments
 	 * @group get_all_post_comment
 	 */
-	public function test_get_all_post_comments() {
+	public function test_get_all_post_comments_ok() {
 		//post id exist in db
 		$post_id = 49;
 		
