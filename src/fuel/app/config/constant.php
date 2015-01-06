@@ -115,3 +115,8 @@ define('COMMENT_DEL_PERMISSION_MSG', 'Delete comment failed');
 define('COMMENT_POST_GET_ERROR', '3005');
 define('COMMENT_POST_GET_DSC', 'Not have any comment');
 define('COMMENT_POST_GET_MSG', 'Can\'t get all comments of the post');
+
+//get all user comments
+define('COMMENT_USER_GET_ERROR', '3005');
+define('COMMENT_USER_GET_DSC', 'Don\'t have any comment');
+define('COMMENT_USER_GET_MSG', 'Not have any result.');

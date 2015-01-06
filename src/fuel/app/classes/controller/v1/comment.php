@@ -221,4 +221,62 @@ class Controller_V1_Comment extends Controller_Rest {
 			
 		}
 	}
+	
+	/**
+	 * The method get all comments of a user
+	 * @link http://localhost/v1/users/{user_id}/comments
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_all_user_comments() {
+		//check token
+		$token = Security::clean(Input::get('token'), $this->filters);
+		if (empty($token)) {
+			//token null error
+			return $this->response(array(
+					'meta' => array(
+							'code' => TOKEN_NULL_ERROR ,
+							'description' => TOKEN_NULL_DESC ,
+							'messages' => TOKEN_NULL_MSG,
+					) ,
+					'data' => null,
+			));
+		} else {
+			$result = User::check_token($token);
+			//token valid
+			if (is_numeric($result) && $result > 0) {
+				
+				$author_id = $this->param('user_id');
+					
+				//get all comment of user id
+				$rs = Comment::get_all_user_comments($author_id);
+				if (false != $rs) {
+					return $this->response(array(
+							'meta' => array(
+									'code' => '200',
+									'messages' => 'Get comment of user success!',
+									'result' => count($rs)
+							),
+							'data' => $rs
+					));
+				} else {
+					//return error array
+					return $this->response(array(
+							'meta' => array(
+									'code' => COMMENT_USER_GET_ERROR ,
+									'description' => COMMENT_USER_GET_DSC ,
+									'messages' => COMMENT_USER_GET_MSG,
+							),
+							'data' => null,
+					));
+						
+				}
+			} else {
+				//return token in valid error
+				return $this->response($result);
+			}
+			
+	 	}
+	}
 }
