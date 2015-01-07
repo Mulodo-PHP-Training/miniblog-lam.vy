@@ -186,7 +186,7 @@ class Comment extends \Orm\Model {
 	
    /*
     * method use to delete a comment
-    * @param input is comment_id
+    * @param comment_id
 	* @return success code is 200 and message
 	*/
 	public static function delete_comment($comment_id) {
@@ -220,7 +220,7 @@ class Comment extends \Orm\Model {
 	
 	/*
 	* method use to get all comments of a post_id
-	* @param input is post_id
+	* @param post_id
 	* @return code is 200 when get success
 	* else return code is 3005 and error message
 	*/
@@ -249,7 +249,7 @@ class Comment extends \Orm\Model {
 
 	/*
 	* method use to get all comments of a author_id
-	* @param input is author_id
+	* @param $author_id- the system id of user
 	* @return code is 200 when get success
 	* else return code is 3006 and error message
 	*/
