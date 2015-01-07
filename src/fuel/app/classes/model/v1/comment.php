@@ -247,7 +247,6 @@ class Comment extends \Orm\Model {
 		}
 	}
 
-
 	/*
 	* method use to get all comments of a author_id
 	* @param $author_id- the system id of user
@@ -266,15 +265,15 @@ class Comment extends \Orm\Model {
 	
 				return $rs;
 			} else {
-				
+	
 				return false;
 			}
 				
-		} catch (\Exception $ex) {
+				
+		} catch(\Exception $ex) {
 			Log::error($ex->getMessage());
 			return $ex->getMessage();
-		}	
+		}
 	}
-				
-			
+
 }

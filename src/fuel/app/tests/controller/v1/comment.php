@@ -335,6 +335,72 @@ class Test_Controller_V1_Comment extends TestCase {
 	}
 	
 	/**
+	 * use test get all comments of user ok
+	 * method GET
+	 * compare with code is 200 , result return greater than 0
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/users/{user_id}/comments
+	 * @group get_all_user_comment
+	 * @dataProvider user_comments_provider
+	 */
+	public function test_get_all_user_comments_ok($data) {
+		//token
+		$test_data = array('token' => self::$user['token']);
+	
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$data[author_id]/comments";
+	
+		$rs = $this->init_curl($test_data, $method, $link);
+		//compare
+		$this->assertEquals('200', $rs['meta']['code']);
+		$this->assertGreaterThan(0, $rs['meta']['result']);
+	
+	}
+	
+	/**
+	 * use test get all comments of user not ok
+	 * method GET
+	 * compare with code is 3006 
+	 * link http://localhost/miniblog/miniblog-lam.vy/src/v1/users/{user_id}/comments
+	 * @group get_all_user_comment
+	 * 
+	 */
+	public function test_get_all_user_comments_notok() {
+		//token
+		$test_data = array('token' => self::$user['token']);
+	    //author id not exist in comment table
+	    $author_id = 0;
+		$method = 'GET';
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$author_id/comments";
+	
+		$rs = $this->init_curl($test_data, $method, $link);
+		//compare
+		$this->assertEquals('3006', $rs['meta']['code']);
+		
+	
+	}
+	
+	/**
+	 * Define test data for testget comments of user ok
+	 *
+	 * @return array Test data
+	 */
+	public function user_comments_provider() {
+		$test_data = array();
+		//owner the comment
+		$test_data[][] = array(
+				'author_id' => '210',
+	
+		);
+		//owner of the post
+	
+		$test_data[][] = array(
+				'author_id' => '89',
+	
+		);
+	
+		return $test_data;
+	}
+	/**
 	 * function to init curl used to api
 	 * set method, link for request
 	 * get result from response
