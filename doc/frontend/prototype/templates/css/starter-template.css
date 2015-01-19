@@ -86,3 +86,22 @@ color:#5CB85A;
 border-top : 1px solid #ddd;
 padding-top:20px;
 }
+table a, table a:hover {
+color:#5CB85A;
+}
+table button {
+width :71px;
+}
+a {
+color:#5CB85A;
+}
+.comment {
+font-style:italic;
+color:#ccc;
+}
+.edit-comment {
+display :none;
+}
+.link-comment {
+color:#5CB85A;
+}
