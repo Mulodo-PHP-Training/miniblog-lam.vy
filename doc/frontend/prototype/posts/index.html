@@ -12,14 +12,14 @@
     <title>Miniblog Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="templates/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../templates/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="templates/css/starter-template.css" rel="stylesheet">
+    <link href="../templates/css/starter-template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="templates/js/ie-emulation-modes-warning.js"></script>
+    <script src="../templates/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -43,9 +43,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav pull-right">
-            <li><a href="posts/index.html">Blog</a></li>
-            <li><a href="users/register.html">Register</a></li>
-            <li><a href="users/login.html">Login</a></li>
+            <li><a href="../index.html">Blog</a></li>
+            <li><a href="../users/register.html">Register</a></li>
+            <li><a href="../users/login.html">Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -58,18 +58,18 @@
 		  <div class="form-search">
 			<form class="navbar-form">
 				<div class="form-group">
-				  <input type="text" placeholder="Enter username, last-first name" class="form-control" size="40" >
+				  <input type="text" placeholder="Enter username, last-first name" class="form-control" size="40" name="keyword" >
 				</div>
 				
-				<button type="submit" class="btn btn-success">Search</button>
+				<button type="submit" class="btn btn-success" name="submit">Search</button>
             </form>
           
 		  </div>
 		  <div class="row">
 				<div class="col-lg-12">
 					<ul class="breadcrumb">
-						<li class="active"><span class="glyphicon glyphicon-home"></span> Home</li>
-						<li><a href="#" ></a></li>
+						<li><a href="../index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+						<li class="active">Posts</li>
 					</ul>
 				</div>
             </div>
@@ -77,15 +77,21 @@
 	 </div>	
 	</div>
     <div class="container">
-
+	  <div class="alert alert-success" role="alert">
+			<strong>Success!</strong> Having 399 result for <strong>key word</strong>.
+        </div>
+		<div class="alert alert-warning" role="alert">
+         <strong>Sorry!</strong> Not have any result return for <strong>key word</strong>.
+        </div>	
       <div class="row">
-        <div class="col-md-6">
+        
+		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
@@ -96,10 +102,10 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
@@ -109,10 +115,10 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
@@ -122,10 +128,10 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
@@ -135,10 +141,10 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
@@ -148,22 +154,21 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <a href="posts/detail.html"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
+                    <a href="#"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
                 </div>
                 <div class="panel-body">
-					<p><a href="users/profile.html"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
+					<p><a><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
 					<br />
 					Post date : 2014-01-13</p>
 				</div>
             </div>
             
 		</div>
-		
 		
 		
       </div>
 		<div class="container">
-            <div class="row paging">
+            <div class="row paging" style="text-align:left">
             
                 <ul class="pagination">
                     <li><a href="#">&laquo;</a></li>
@@ -190,8 +195,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="templates/js/bootstrap.min.js"></script>
+    <script src="../templates/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="templates/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../templates/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
