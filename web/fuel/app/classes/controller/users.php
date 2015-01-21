@@ -20,14 +20,14 @@ use Fuel\Core\Controller_Template;
  * response body and status.
  *
  * @package  app
- * @extends  Controller
+ * @extends  Controller_Template
  */
 class Controller_Users extends Controller_Template
 {
 
 	
 	/**
-	 * The basic welcome message
+	 * The index function, user home page
 	 *
 	 * @access  public
 	 * @return  Response
@@ -83,7 +83,7 @@ class Controller_Users extends Controller_Template
 				Session::set('token', $res['data']['token']);
 				Session::set('user_id', $res['data']['id']);
 				Session::set('username', $res['data']['username']);
-				
+				//set the success message alert
 				$data['result'] = '<div class="alert alert-success" role="alert">
 									<strong>Success!</strong> '.$res['meta']['message'].'
 		        				</div>';
@@ -98,6 +98,7 @@ class Controller_Users extends Controller_Template
 					
 					$message = $res['meta']['message'];
 				}
+				//set the error message alert
 				$data['result'] = '<div class="alert alert-warning" role="alert">
 									<strong>Sorry!</strong> '.$message.'
 		        				</div>';
@@ -123,7 +124,7 @@ class Controller_Users extends Controller_Template
 	 * The function register new account
 	 *
 	 * @access  public
-	 * @return  Response
+	 * @return  Template view
 	 */
 	
 	public function action_logout() {
@@ -131,6 +132,7 @@ class Controller_Users extends Controller_Template
 		Session::destroy();
 		return Response::redirect('/index');
 	}
+	
 	/**
 	 * function to init curl used to api
 	 * set method, link for request

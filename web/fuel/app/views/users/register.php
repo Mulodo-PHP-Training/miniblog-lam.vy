@@ -5,7 +5,7 @@
 		<div class="col-md-6" style="margin-top:30px">
 				
 				
-				<form class="form-horizontal" method="post" action="register">
+				<form class="form-horizontal" method="post" action="users/register">
 				
 				  <div class="form-group"  >
 					<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;margin-left:0px;padding-left:0px;"></label>
