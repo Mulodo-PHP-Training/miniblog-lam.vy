@@ -1,0 +1,107 @@
+body {
+  padding-top: 50px;
+  
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.blog-item {
+background :#F0F5ED;
+border:1px solid #5CB85A;
+width:100%;
+padding:20px;
+margin-bottom:3px;
+/*padding:10px;
+width:100%;
+*/
+margin:10px 0px 5px 0px;
+}
+.blog-item a {
+color:#5CB85A;
+}
+.blog-item a:hover{
+text-decoration:none;
+
+}
+.paging {
+text-align:center;
+}
+
+.paging a {
+
+background-color:#5CB85A;
+margin :3px;
+}
+.pagination>li>a, .pagination>li>span {
+color: #fff;
+background-color:#5CB85A;
+}
+.pagination>.active>a {
+background-color:#eee;
+color:#5CB85A;
+border:1px solid #ddd;
+}
+
+.navbar {
+background: #5CB85A;
+border-bottom:1px solid #ededed;
+
+}
+.navbar-header {
+margin-left:15px;
+padding-left:15px;
+}
+.navbar-inverse .navbar-nav>li>a {
+color: #fff;/*#9d9d9d;*/
+}
+.navbar-inverse .navbar-brand {
+color: #fff;
+}
+.navbar-inverse .navbar-nav >li>a:hover {
+color: #ddd;/*#9d9d9d;*/
+}
+
+.navbar-form{
+padding-left:0px;
+margin-left:0px;
+}
+.breadcrumb {
+background-color:#fff;
+padding:0px;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+color: #5CB85A;
+background-color: #eee;
+}
+
+.panel-heading a ,.panel-body a {
+color:#5CB85A;
+}
+.custom-text{
+/*background-color:#dff0d8;*/
+}
+.footer {
+border-top : 1px solid #ddd;
+padding-top:20px;
+}
+table a, table a:hover {
+color:#5CB85A;
+}
+table button {
+width :71px;
+}
+a {
+color:#5CB85A;
+}
+.comment {
+font-style:italic;
+color:#ccc;
+}
+.edit-comment {
+display :none;
+}
+.link-comment {
+color:#5CB85A;
+}
