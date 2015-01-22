@@ -203,8 +203,8 @@ class Post extends \Orm\Model {
 	public static function get_all_posts() {
 		try {
 			//use orm
-			$entry = Post::find('all', array('select' => array('id', 'title', 'created_at', 'modified_at')));
-			$entry = Post::query()->where('status', '=', '1')->get();
+			$entry = DB::query('SELECT 	p.id, p.title, p.created_at, p.modified_at, p.author_id, u.username FROM post p, user u WHERE p.status=1 AND u.id = p.author_id')->execute();
+			//$entry = Post::query()->where('status', '=', '1')->get();
 			//check rs
 			if (count($entry) > 0) {
 				$data = array();
@@ -221,6 +221,28 @@ class Post extends \Orm\Model {
 		}
 		
 		
+	}
+	public static function get_post_page($start, $row) {
+		try {
+			
+			$query = DB::query("SELECT 	p.id, p.title, p.created_at, p.modified_at, p.author_id, u.username FROM post p, user u WHERE p.status=1 AND u.id = p.author_id LIMIT $start,$row");
+			
+			$entry = $query->execute();
+				
+			if (count($entry) > 0) {
+				$data = array();
+				foreach ($entry as $item) {
+					//add data post in to array
+					$data[] = $item;
+				}
+				return $data;
+			} else {
+				return false;
+			}
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+			
+		}
 	}
 	
     /*

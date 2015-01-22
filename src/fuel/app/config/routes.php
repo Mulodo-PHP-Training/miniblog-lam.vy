@@ -27,6 +27,7 @@ return array(
 	//search user by name
 	'(:version)/users(:name)?' =>  array(array('GET', new Route('$1/user/search_user'))), 
 	//--------------------------POST--------------------------------
+	'(:version)/posts/page/:num/:num' => array(array('GET', new Route('$1/post/post_page'))),
 	'(:version)/posts' => array(array('POST', new Route('$1/post/create')), array('GET', new Route('$1/post/all_posts'))),
 	
 	//comment
