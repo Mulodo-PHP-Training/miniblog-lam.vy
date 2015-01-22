@@ -502,12 +502,12 @@ class User extends \ORM\Model {
 		try {
 			if (strlen($name) >= 4) {
 				//search by full text index
-				$query = DB::query("SELECT id, username, lastname, firstname, email
+				$query = DB::query("SELECT id, username, lastname, firstname, email, created_at 
 							 FROM user WHERE ( match(username, lastname, firstname)
 							 against('*$name*' IN BOOLEAN MODE) ) and status = 1 ");
 			} else {
 				//search by like
-				$query = DB::query("SELECT id, username, lastname, firstname, email
+				$query = DB::query("SELECT id, username, lastname, firstname, email, created_at 
 						FROM user WHERE
 						( username LIKE '%$name%' or lastname LIKE '%$name%' or firstname LIKE '%$name%')
 						and status =1 ");
@@ -521,6 +521,36 @@ class User extends \ORM\Model {
 		}
 	}
 	
+   /*
+	* function to search user account by name, have paging
+	* @param input is name
+	* search by lastname, firstname and username contain the keyword
+	* @return the data array for search
+	*
+	*/
+	public static function search_user_page($start, $row, $name) {
+		//check the length of the key
+		try {
+			if (strlen($name) >= 4) {
+				//search by full text index
+				$query = DB::query("SELECT id, username, lastname, firstname, email, created_at
+						FROM user WHERE ( match(username, lastname, firstname)
+						against('*$name*' IN BOOLEAN MODE) ) and status = 1 LIMIT $start, $row");
+			} else {
+				//search by like
+					$query = DB::query("SELECT id, username, lastname, firstname, email, created_at
+					FROM user WHERE
+					( username LIKE '%$name%' or lastname LIKE '%$name%' or firstname LIKE '%$name%')
+					and status =1 LIMIT $start, $row");
+				}
+					
+				//return the result
+				return $query->execute();
+	} catch (\Exception $ex) {
+	Log::error($ex->getMessage());
+	return $ex->getMessage();
+	}
+	}
    
 	
 }

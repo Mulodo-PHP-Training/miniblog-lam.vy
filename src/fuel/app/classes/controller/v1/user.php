@@ -454,8 +454,17 @@ class Controller_V1_User extends Controller_Rest {
 					)
 			);
 		} else {
-			//get the user for search
-			$result = User::search_user($name);
+			
+			$start = Input::get('start');
+			$row = Input::get('row');
+			if(is_numeric($start) && is_numeric($row)) {
+				//call method search per page
+				$result = User::search_user_page($start, $row, $name);
+			} else {
+				//get the user for search
+				$result = User::search_user($name);
+			}
+			
 			//count rs
 			$num = count($result);
 			//check have user

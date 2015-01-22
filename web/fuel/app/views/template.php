@@ -79,9 +79,14 @@
       <div class="row">
         <div class="col-md-6">
 		  <div class="form-search">
-			<form class="navbar-form">
+			<form class="navbar-form" method="get" action="users/search">
 				<div class="form-group">
-				  <input type="text" placeholder="Enter username, last-first name" class="form-control" size="40" name="keyword" >
+				  <input type="text" placeholder="Enter username, last-first name" class="form-control" size="40" name="name"
+				  <?php 
+				  	if (Input::get('name')) {
+						echo 'value = "'.Input::get('name').'"';			
+					}
+				  ?> >
 				</div>
 				
 				<button type="submit" class="btn btn-success" name="submit">Search</button>

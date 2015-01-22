@@ -73,7 +73,7 @@ class Controller_Users extends Controller_Template
 			//call api
 			//set method, link, use curl to call
 			$method = 'POST';
-			$link = 'http://localhost/_blog/blog/src/v1/users/';
+			$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users';
 			
 			$res =  $this->init_curl($user, $method, $link);
 			//create success , return code 200
@@ -154,7 +154,7 @@ class Controller_Users extends Controller_Template
 			$user['password'] = Security::clean(Input::post('password'), $this->filters);
 			//call api
 			$method = 'POST';
-			$link = 'http://localhost/_blog/blog/src/v1/users/login';
+			$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/login';
 			$res = $this->init_curl($user, $method, $link);
 			//check result code return is 200
 			if ($res['meta']['code'] == 200) {
@@ -215,7 +215,7 @@ class Controller_Users extends Controller_Template
     
 						);
 				$method = 'PUT';
-				$link = 'http://localhost/_blog/blog/src/v1/users/';
+				$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users';
 				//run
 				$result = $this->init_curl($user, $method, $link);
 				//sucess
@@ -277,7 +277,7 @@ class Controller_Users extends Controller_Template
 				//set method
 				$method = 'PUT';
 				//add the user id into the link
-				$link = 'http://localhost/_blog/blog/src/v1/users/password';
+				$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/password';
 				$result = $this->init_curl($info, $method, $link);
 				//check the result return
 				if ($result['meta']['code'] == 200) {
@@ -354,4 +354,80 @@ class Controller_Users extends Controller_Template
 		return $res;
 	}
 	
+	/**
+	 * The function use search user by name
+	 * 
+	 * @access  public
+	 * @return  Template view
+	 */
+	public function action_search() {
+		$data = array();
+		$this->template->title = "Search - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Users</a></li>
+				<li class="active">Search</li>', false);
+		//check name for search
+		$name = Input::get('name');
+		if (!empty($name)) {
+			$info['name'] = $name;
+			//call api to count result have
+			$method = 'GET';
+			//add the user id into the link
+			$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/search';
+			$rs = $this->init_curl($info, $method, $link);
+			if ($rs['meta']['code'] == 200) {
+				//config //config page
+				$config = array(
+						'name' => 'bootstrap3',
+						'pagination_url' => Uri::base(false).'users/search?name='.$name,
+						'total_items'    => $rs['meta']['result'],
+						'per_page'       => 6, // have 6 item per page
+						'uri_segment'    => 5, //maximum 5 page showed
+						'uri_segment'    => 'page',
+						'show_first' => true,
+						'show_last' => true,
+						'first-marker' => "First",
+						'last-marker' => "Last",
+						'next-marker' => "Next",
+						'previous-marker' => "Previous",
+				);
+				$pagination = Pagination::forge('paginate', $config);
+					
+				$info['start'] = $pagination->offset;
+				$info['row'] = $pagination->per_page;
+					
+				$data['data'] = $this->search_user_page($info);
+				$data['pagination'] = $pagination;
+					
+				$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong> Having '.$rs['meta']['result'].' results for key word.
+		        				</div>';
+			} else {
+				
+				$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> Not have any result.
+		        				</div>';
+				$data['data'] = null;
+			}
+			
+			
+		} else {
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> The keyword for search is empty.
+		        				</div>';
+			$data['data'] = null;
+		}
+		$this->template->content = View::forge('users/search', $data);
+	}
+	/**
+	 * The method use to search user on page
+	 * @access public
+	 * @return info user of this page
+	 */
+	public function search_user_page($data) {
+		$method = "GET";
+		$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/search/";
+		$rs = $this->init_curl($data, $method, $link);
+		
+		return $rs['data'];
+	}
 }
