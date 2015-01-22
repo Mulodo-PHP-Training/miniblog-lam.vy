@@ -1,100 +1,42 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
-            
-		</div>
         
-		<div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
+        
+		<?php 
+				//loop data posts
+				if (count($data) > 0) {
+					foreach($data as $item) {
+					
+		?>
+					<div class="col-md-6">
+					  	<div class="panel panel-success">
+			                <div class="panel-heading">
+			                    <a href="posts/detail/<?php echo $item['id'];?>"><h3 class="panel-title"><?php echo $item['title'];?></h3></a>
+			                </div>
+			                <div class="panel-body">
+								<p><a href="users/profile/<?php echo $item['author_id'];?>"><span class="glyphicon glyphicon-user"></span> : <?php echo $item['username'];?></a>
+								<br />
+								Post date : <?php echo date('Y-m-d',$item['created_at']);?></p>
+							</div>
+			            </div>
             
-		</div>
-		<div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
-            
-		</div>
-		<div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
-            
-		</div>
-		<div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
-            
-		</div>
-		<div class="col-md-6">
-		  <div class="panel panel-success">
-                <div class="panel-heading">
-                    <a href="posts/detail"><h3 class="panel-title">Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</h3></a>
-                </div>
-                <div class="panel-body">
-					<p><a href="users/profile"><span class="glyphicon glyphicon-user"></span> : Lam vy</a>
-					<br />
-					Post date : 2014-01-13</p>
-				</div>
-            </div>
-            
-		</div>
+					</div>	
+		<?php 
+					}
+				}
+		?>
 		
 		
 		
       </div>
 		<div class="container">
+			
             <div class="row paging">
             
                 <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li class="active"><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
+                    <?php $pagi = Pagination::instance('paginate'); ?>
+   					<?php echo $pagi->render(); ?>
                 </ul>
             </div>
         </div>	
