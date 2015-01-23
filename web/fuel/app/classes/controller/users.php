@@ -131,7 +131,7 @@ class Controller_Users extends Controller_Template
 	public function action_logout() {
 		
 		Session::destroy();
-		return Response::redirect('/index');
+		return Response::redirect('/');
 	}
 	
 	/**
@@ -147,42 +147,50 @@ class Controller_Users extends Controller_Template
 		$this->template->title = "Login - Miniblog";
 		$this->template->set('breadcrumbs', '<li><a href="#">Users</a></li>
 				<li class="active">Login</li>', false);
-		//check submit for login
-		if (Input::post()) {
-			//get username and password
-			$user['username'] = Security::clean(Input::post('username'), $this->filters);
-			$user['password'] = Security::clean(Input::post('password'), $this->filters);
-			//call api
-			$method = 'POST';
-			$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/login';
-			$res = $this->init_curl($user, $method, $link);
-			//check result code return is 200
-			if ($res['meta']['code'] == 200) {
-				Session::set('token', $res['data']['token']);
-				Session::set('user_id', $res['data']['id']);
-				Session::set('username', $res['data']['username']);
-				//set the success message alert
-				$data['result'] = '<div class="alert alert-success" role="alert">
+		//check user have logged ?
+		if (!Session::get('user_id')) {
+			//check submit for login
+			if (Input::post()) {
+				//get username and password
+				$user['username'] = Security::clean(Input::post('username'), $this->filters);
+				$user['password'] = Security::clean(Input::post('password'), $this->filters);
+				//call api
+				$method = 'POST';
+				$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/login';
+				$res = $this->init_curl($user, $method, $link);
+				//check result code return is 200
+				if ($res['meta']['code'] == 200) {
+					Session::set('token', $res['data']['token']);
+					Session::set('user_id', $res['data']['id']);
+					Session::set('username', $res['data']['username']);
+					//set the success message alert
+					$data['result'] = '<div class="alert alert-success" role="alert">
 									<strong>Success!</strong> '.$res['meta']['messages'].'
 		        				</div>';
-			} else {
-				//alert error
-				if (is_array($res['meta']['message'])) {
-					//json return is array message output
-					$message = implode($res['meta']['message'][0]);
-					//var_dump($res['meta']);die;
 				} else {
-						
-					$message = $res['meta']['message'];
-				}
-				//set the error message alert
-				$data['result'] = '<div class="alert alert-warning" role="alert">
+					//alert error
+					if (is_array($res['meta']['message'])) {
+						//json return is array message output
+						$message = implode($res['meta']['message'][0]);
+						//var_dump($res['meta']);die;
+					} else {
+			
+						$message = $res['meta']['message'];
+					}
+					//set the error message alert
+					$data['result'] = '<div class="alert alert-warning" role="alert">
 									<strong>Sorry!</strong> '.$message.'
 		        				</div>';
+				}
+					
+					
 			}
-			
-			
-		} 
+		} else {
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> You had logged.
+		        				</div>';
+		}
+		
 		$this->template->content = View::forge('users/login', $data);
 		
 	}
