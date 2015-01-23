@@ -272,6 +272,35 @@ class Post extends \Orm\Model {
 	
 	
 	}
+	
+   /*
+	* method use to get all current user's post
+	* use manage post
+	* @return the code 200 when success, 2506 when not have any result
+	*/
+	public static function get_all_current_user_posts($user_id) {
+		try {
+			$entry = DB::query("SELECT id, title, created_at, modified_at, status FROM post WHERE author_id = ".$user_id, DB::SELECT)->execute();
+				
+			//check rs
+			if (count($entry) > 0) {
+					
+				$data = array();
+				foreach ($entry as $item) {
+					//add data post in to array
+					$data[] = $item;
+				}
+				return $data;
+			} else {
+				return false;
+			}
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+		}
+	
+	
+	}
+	
 	/*
 	 * method use to get a posts in db
 	* just get posts is actived

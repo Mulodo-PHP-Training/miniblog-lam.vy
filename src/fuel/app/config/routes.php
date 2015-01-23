@@ -19,6 +19,7 @@ return array(
 	//change the password
 	'(:version)/users/password' => array(array('PUT', new Route('$1/user/change_password'))),
 	//get all user post
+	'(:version)/users/:user_id/posts/manage' => array(array('GET', new Route('$1/post/all_current_user_posts'))),
 	'(:version)/users/:user_id/posts' => array(array('GET', new Route('$1/post/all_user_posts'))),
 
 	//get all comments of user id
