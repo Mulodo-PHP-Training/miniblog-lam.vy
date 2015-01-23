@@ -37,13 +37,7 @@ class Controller_Posts extends Controller_Template
 	*/
 	public function action_index()
 	{
-		$data = array();
-		$data['title']   = "Posts - Miniblog";
-		$data['content'] = "";
-		$this->template->title = "Posts - Miniblog";
-		$this->template->set('breadcrumbs', '<li class="active">Posts</li>
-						',false);
-		$this->template->content = View::forge('posts/index', $data);
+		return Response::redirect('/');
 	}
 	
 	/**
@@ -155,9 +149,10 @@ class Controller_Posts extends Controller_Template
 			//first is get all list post of user
 			$user_id = Session::get('user_id');
 			$method = 'GET';
-			$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$user_id/posts";
+			$user['token'] = Session::get('token');
+			$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$user_id/posts/manage";
 			
-			$rs = $this->init_curl(null, $method, $link);
+			$rs = $this->init_curl($user, $method, $link);
 			//check result return
 			if ($rs['meta']['code'] == 200) {
 				$data['data'] = $rs['data'];
@@ -247,6 +242,98 @@ class Controller_Posts extends Controller_Template
 		
 		
 	}
+	/**
+	 * The function use to delete a post
+	 * 
+	 * @access public
+	 * @return 
+	 */
+	public function action_delete() {
+		$data = array();
+		$this->template->title ="Post delete - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Delete</li>
+						',false);
+		$post['post_id'] = Uri::segment(3);
+		//add token
+		$post['token'] = Session::get('token');
+		//link call api
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$post['post_id'];
+		$method = 'DELETE';
+		$rs = $this->init_curl($post, $method, $link);
+		//delete success
+		if ($rs['meta']['code'] == 200) {
+			return Response::redirect('posts/manage');
+		} else {
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>'.$rs['meta']['messages'].' Access is denied.
+		        				</div>';
+			$this->template->content = View::forge('posts/error', $data);
+		}
+		
+	}
+	/**
+	 * The functio  use to update status of post unactive
+	 * 
+	 * @access public
+	 * @return status
+	 */
+	public function action_unpublish() {
+		$data = array();
+		//set title
+		$this->template->title = "Post error - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Un publish</li>
+						',false);
+		$post['post_id'] = Uri::segment(2);
+		$post['token'] = Session::get('token');
+		//set method and link
+		$method = 'PUT';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$post['post_id'].'/inactive';
+		$rs = $this->init_curl($post, $method, $link);
+		if ($rs['meta']['code'] == 200) {
+			return Response::redirect('posts/manage');
+		} else {
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>'.$rs['meta']['messages'].' Access is denied.
+		        				</div>';
+			$this->template->content = View::forge('posts/error', $data);
+		}
+		
+	}
+	
+	/**
+	 * The functio  use to update status of post active
+	 *
+	 * @access public
+	 * @return status
+	 */
+	public function action_publish() {
+	
+		$data = array();
+		//set title
+		$this->template->title = "Post error - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Publish</li>
+						',false);
+		
+		$post['post_id'] = Uri::segment(2);
+		$post['token'] = Session::get('token');
+		//set method and link
+		$method = 'PUT';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$post['post_id'].'/active';
+		$rs = $this->init_curl($post, $method, $link);
+		if ($rs['meta']['code'] == 200) {
+			return Response::redirect('posts/manage');
+		} else {
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>'.$rs['meta']['messages'].' Access is denied.
+		        				</div>';
+			$this->template->content = View::forge('posts/error', $data);
+		}
+	
+	}
+	
 	
 	/**
 	 * function to init curl used to api

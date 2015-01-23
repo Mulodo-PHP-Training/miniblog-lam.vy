@@ -6,5 +6,6 @@ return array(
 	'_404_'   => 'welcome/404',    // The main 404 route
 	
 	'hello(/:name)?' => array( 'welcome/hello', 'name' => 'hello' ),
-	
+	'posts/:num/unpublish' => array( 'posts/unpublish', 'name' => 'unpublish' ),
+	'posts/:num/publish' => array( 'posts/publish', 'name' => 'publish' ),
 );
