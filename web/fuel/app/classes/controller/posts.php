@@ -3,6 +3,8 @@ use Fuel\Core\Input;
 use Fuel\Core\Session;
 use Fuel\Core\Controller_Template;
 use Fuel\Core\Security;
+use Model\V1\Post;
+use Fuel\Core\Response;
 /**
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
@@ -69,6 +71,181 @@ class Controller_Posts extends Controller_Template
 		$data['data'] = $res['data'];		
 		
 		$this->template->content = View::forge('posts/detail', $data);
+	}
+	
+	/**
+	 * The function use create a post
+	 * 
+	 * @access public
+	 * @return Template view create Post, message create success
+	 *  
+	 */
+	public function action_create() {
+		//check session user is loggin
+		if (Session::get('token')) {
+			$data = array();
+			$this->template->title = "Create post - Miniblog";
+			$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Create</li>
+						',false);
+			
+			//submit for save
+			if (isset($_POST['save'])) {
+				
+				$post['title'] = Security::clean(Input::post('title'), $this->filters);
+				$post['content'] = Security::clean(Input::post('content'), $this->filters);
+				$post['token'] = Session::get('token');
+				//call api
+				$method = 'POST';
+				$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts';
+				$rs = $this->init_curl($post, $method, $link);
+				
+				if ($rs['meta']['code'] == 200) {
+					$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong> Create post success
+		        				</div>';
+				} else {
+					//error
+					if (is_array($rs['meta']['messages'])) {
+						//json return is array message output
+						$message = implode($rs['meta']['messages'][0]);
+						//var_dump($res['meta']);die;
+					} else {
+							
+						$message = $rs['meta']['messages'];
+					}
+					//set the error message alert
+					$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> '.$message.'
+		        				</div>';
+				}
+			}
+			
+			//submit for preview
+			if (isset($_POST['preview'])) {
+				//data post
+				$post['title'] = Security::clean(Input::post('title'), $this->filters);
+				$post['content'] = Security::clean(Input::post('content'), $this->filters);
+				$post['time'] = time();
+				$data['post'] = $post;
+			}
+			$this->template->content = View::forge('posts/create', $data);
+		} else {
+			//return access denied
+			return Response::redirect('users/login');
+		}
+	}
+	
+	/**
+	 * The function use manage post of user
+	 *
+	 * @access public
+	 * @return all posts of user
+	 *
+	 */
+	
+	public function action_manage() {
+		$data = array();
+		$this->template->title = "Manage post - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Manage</li>
+						',false);		
+		//check permission
+		if (Session::get('token')) {
+			//first is get all list post of user
+			$user_id = Session::get('user_id');
+			$method = 'GET';
+			$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/users/$user_id/posts";
+			
+			$rs = $this->init_curl(null, $method, $link);
+			//check result return
+			if ($rs['meta']['code'] == 200) {
+				$data['data'] = $rs['data'];
+				$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong> You have '.$rs['meta']['result'].' posts in list .
+		        				</div>';
+			} else {
+				$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>Not have any your post.
+		        				</div>';
+			}
+			$this->template->content = View::forge('posts/manage', $data);
+		} else {
+			
+			//response access
+			return Response::redirect('users/access_denied');
+		}
+	}
+	
+	/**
+	 * The function use update post of user
+	 *
+	 * @access public
+	 * @return all posts of user
+	 *
+	 */
+	public function action_update() {
+		$data=array();
+		$data['post_id'] = Uri::segment(3);
+		$this->template->title = "Post update - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Posts</a></li>
+								<li class="active">Update</li>
+						',false);
+		//check user logged
+		if (Session::get('token')) {
+			//get info of post want to update
+			$method = 'GET';
+			$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]";
+	
+		    $rs = $this->init_curl(null, $method, $link);
+			if ($rs['meta']['code'] == 200) {
+				$data['post'] = $rs['data'];
+			} else {
+				$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>'.$rs['meta']['messages'].'
+		        				</div>';
+			}
+			
+			//check submit to save data updated
+			if (isset($_POST['save'])) {
+				//set data to update
+				$post['title'] = Input::post('title');
+				$post['content'] = Input::post('content');
+				$post['token'] = Session::get('token');
+				$post['post_id'] = $data['post_id'];
+				//set data in view to show data updated in form
+				$data['post'] = $post ;
+				//set method
+				$method = 'PUT';
+				$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/'.$data['post_id'];
+				//call api
+				$result = $this->init_curl($post, $method, $link);
+				if ($result['meta']['code'] == 200) {
+					$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong>Update success.
+		        				</div>';
+				} else {
+					$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong>'.$result['meta']['messages'].'. Access is denied.
+		        				</div>';
+				}
+				
+			} elseif (isset($_POST['preview'])) {
+				//preview
+				$post['title'] = Input::post('title');
+				$post['content'] = Input::post('content');
+				$post['created_at'] = time();
+				$post['modified_at'] = time();
+				$data['post'] = $post;			
+				
+			}
+			
+			$this->template->content = View::forge('posts/update', $data);
+		} else {
+			return Response::redirect('users/access_denied');
+		}
+		
+		
 	}
 	
 	/**

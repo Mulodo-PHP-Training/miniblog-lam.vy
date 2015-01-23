@@ -252,7 +252,7 @@ class Post extends \Orm\Model {
 	*/
 	public static function get_all_user_posts($user_id) {
 		try {
-			$entry = DB::query("SELECT id, title, created_at, modified_at FROM post WHERE status = 1 AND author_id = ".$user_id, DB::SELECT)->execute();
+			$entry = DB::query("SELECT id, title, created_at, modified_at, status FROM post WHERE status = 1 AND author_id = ".$user_id, DB::SELECT)->execute();
 			
 			//check rs
 			if (count($entry) > 0) {
