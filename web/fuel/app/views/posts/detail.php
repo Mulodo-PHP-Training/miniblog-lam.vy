@@ -14,17 +14,24 @@
 			<!--  start write comment -->
 			<div class="col-lg-12">
 				<h3>Write a comment</h3>
-				<form class="form-horizontal" action="comments/create" method ="post"  >
+				
+				<div class="col-sm-12" id ="rs-comment">
+					
+				</div>
+				<form class="form-horizontal">
 					<div class="form-group">
 					
 						<div class="col-sm-12">
-						 <textarea class="form-control" rows="3" placeholder="enter comment here..."></textarea>
+						 <textarea class="form-control" rows="3" placeholder="enter comment here..." name="cm-content" id ="cm-content"></textarea>
+						</div>
+						<div class="col-sm-12">
+						<input type="hidden" name="post_id" value="<?php echo Uri::segment(3)?>" id="cm-post_id" />
 						</div>
 					</div>
 				 
 					<div class="form-group">
 						<div class=" col-sm-12">
-						  <button type="submit" class="btn btn-success" name="submit">Comment</button>
+						  <button type="button" class="btn btn-success" name="submit" id = "submit">Comment</button>
 						  
 						</div>
 					</div>
@@ -32,5 +39,13 @@
 				
 			</div>
 			<!-- end write comment -->
+			<div class="col-lg-12">
+				<h4>View all comments</h4>
+			</div>
+			<div id="all-comment">
+			
+			</div>
 	</div>
 </div>
+
+
