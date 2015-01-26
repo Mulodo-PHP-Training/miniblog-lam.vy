@@ -308,7 +308,7 @@ class Post extends \Orm\Model {
 	*/
 	public static function get_post_info($id) {
 		try {
-			$entry = DB::query("SELECT p.id, p.title, p.content, p.created_at, p.modified_at, u.username FROM post p, user u WHERE p.status = 1 AND p.author_id=u.id AND p.id = ".$id, DB::SELECT)->execute();
+			$entry = DB::query("SELECT p.id, p.title, p.content, p.created_at, p.modified_at, u.username, u.id as author_id FROM post p, user u WHERE p.status = 1 AND p.author_id=u.id AND p.id = ".$id, DB::SELECT)->execute();
 			
 			//check rs
 			if (count($entry) > 0) {

@@ -2,7 +2,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 			<a href="#"><h1><?php echo $data['title'];?></h1></a>
-			<p><span class="glyphicon glyphicon-user"></span> : <a href="#"><?php echo $data['username'];?></a></p>
+			<p><span class="glyphicon glyphicon-user"></span> : <a href="users/profile/<?php echo $data['author_id'] ?>"><?php echo $data['username'];?></a></p>
 				<p><i>Post date : <?php echo date('Y-m-d H:i:m', $data['created_at']);?>
 				<br />
 				   Modified date :<?php echo date('Y-m-d H:i:m', $data['modified_at']);?>

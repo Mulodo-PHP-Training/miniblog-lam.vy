@@ -426,6 +426,39 @@ class Controller_Users extends Controller_Template
 		}
 		$this->template->content = View::forge('users/search', $data);
 	}
+	
+	/**
+	 * The function update info user
+	 *
+	 * @access  public
+	 * @return  Template view
+	 */
+	
+	public function action_profile() {
+		$data = array();
+		//set template tile
+		$this->template->title = "Profile - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Users</a></li>
+				<li class="active">Profile</li>', false);
+		//set data user if for get info from api
+		$user_id = Uri::segment(3);
+		//call api
+		$method = 'GET';
+		$link = 'http://localhost/_blog/blog/src/v1/users/'.$user_id;
+		//call curl
+		$rs = $this->init_curl(null, $method, $link);
+		//check for success
+		if ($rs['meta']['code'] == '200') {
+			$data['result'] = '';
+			$data['data'] = $rs['data'];
+		} else {
+			$data['result'] =  '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> '.$rs['meta']['message'].'
+		        				</div>';
+		}
+		//return views
+		$this->template->content = View::forge('users/profile', $data);
+	}
 	/**
 	 * The method use to search user on page
 	 * @access public
