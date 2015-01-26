@@ -71,6 +71,33 @@ class Controller_Comments extends Controller_Template
 	}
 	
 	
+	/**
+	 * The get all comment of post function
+	 *
+	 * @access  public
+	 * @return  Response
+	 */
+	public function action_get_all_post_comment()
+	{
+		$rs = array();
+		if (Input::is_ajax()) {
+			//create and call api to get all comments of this post
+			$data['post_id'] = Input::post('post_id');
+			$method = 'GET';
+			$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments";
+			
+			$comments = $this->init_curl(null, $method, $link);
+			if ($comments['meta']['code'] == 200) {
+				$rs['data'] = $comments['data'];
+			} else {
+				$rs['data'] = '';
+			}	
+				
+			//print_r($rs);die;
+		}
+		return json_encode($rs);
+	}
+	
 	
 	/**
 	 * function to init curl used to api
