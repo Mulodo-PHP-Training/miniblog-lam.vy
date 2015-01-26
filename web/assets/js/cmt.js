@@ -80,7 +80,29 @@ $(document).ready(function() {
 					$(".link-comment[cid="+id+"]").focus();
 			    });
 
-	        	   	
+	        	$(".del-comment").click(function(){
+	        	   
+	        	    if(window.confirm("Are you sure you want to delete this comment?")){
+		        	    comment_id = $(this).attr("cid");
+	        	    	$.ajax({
+	        	            url: "comments/delete",
+	        	            type: "POST",
+	        	            data: "id="+comment_id+"&post_id="+post_id,
+	        	            success: function(msg) {
+		        	           if (msg == 1) {
+	        	          	      load_comment();
+		        	           } else {
+									alert ("Soory! You don't have permission for delete this comment");
+			        	       }
+	        	  			  
+	        	            }
+	        	        });
+	        	    }
+	        	    else{
+	        	        return false;
+	        	    }
+	          });
+	          /    	
 	        }
 		});
 
