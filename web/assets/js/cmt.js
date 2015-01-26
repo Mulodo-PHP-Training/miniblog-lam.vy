@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function() {
+ 
   load_comment();
   $("#submit").click(function(){
 	 
@@ -35,10 +36,11 @@ $(document).ready(function() {
 	        	
 	        	var rs = "";
 	        	for(i = 0; i < data.data.length; i++) {
-					
+	        		date = new Date(data.data[i].modified_at*1000);
+	        		modified = (date.getFullYear() ) + '/' + (date.getMonth()+1) + '/' +  date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds();
 	        		rs += '<div class="col-sm-12" >'
 	        		        +'<p><a href="#"><h4>'+data.data[i].username+'</h4></a> <span class="content-comment" cid="'+data.data[i].id+'">'+data.data[i].content+'</span>'
-	        				+'<span class="comment"> '+data.data[i].created_at+' - <span class="link-comment" cid="'+data.data[i].id+'"><span class="glyphicon glyphicon-edit"></span></span> - <span class="del-comment" cid="'+data.data[i].id+'">'
+	        				+'<span class="comment"> '+modified+' - <span class="link-comment" cid="'+data.data[i].id+'"><span class="glyphicon glyphicon-edit"></span></span> - <span class="del-comment" cid="'+data.data[i].id+'">'
 	        				     +'<span class="glyphicon glyphicon-remove"></span></span>'	
 	        				+'</p>'
 	        				+'	<div class="edit-comment" cid="'+data.data[i].id+'">'
