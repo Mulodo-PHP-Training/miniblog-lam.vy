@@ -130,12 +130,58 @@ class Controller_Comments extends Controller_Template
 					return 2;
 				}
 			} else {
-				//return the template and view user access denied when have error
-				return Response::redirect('users/access_denied');
+				//return 0 b/c user not login
+				return 0;
 			}
 		}
 		
 		
+	}
+	
+	/**
+	 * The function use to update a comment.
+	 * @param $post_id, comment id, content
+	 * have check permission for this function on api
+	 *
+	 * @access  public
+	 * @return  Response
+	 */
+	public function action_update() {
+		$data = array();
+	
+		//check ajax called
+		if (Input::is_ajax()) {
+			//check session for logged
+			if (Session::get('token')) {
+				//create data to call api
+				$data['post_id'] = Input::post('post_id');
+				$data['comment_id'] = Input::post('comment_id');
+				$data['content'] = Security::clean(Input::post('content'), $this->filters);
+				$data['token'] = Session::get('token');
+				if (empty($data['content'])) {
+					return 3;
+				} else {
+					//set method and link
+					$method = 'PUT';
+					$link = "http://localhost/miniblog/miniblog-lam.vy/src/v1/posts/$data[post_id]/comments/$data[comment_id]";
+					$rs = $this->init_curl($data, $method, $link);
+					//check for sucess
+					if ($rs['meta']['code'] == 200) {
+						//return 1 for success
+						return 1;
+					} else {
+						//return if have error
+						return 2;
+					}
+				}
+				
+			} else {
+				//return 0 b/c user not login
+				return 0;
+			}
+		}
+	
+	
 	}
 	/**
 	 * function to init curl used to api

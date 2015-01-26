@@ -91,8 +91,10 @@ $(document).ready(function() {
 	        	            success: function(msg) {
 		        	           if (msg == 1) {
 	        	          	      load_comment();
-		        	           } else {
-									alert ("Soory! You don't have permission for delete this comment");
+		        	           } else if (msg == 2) {
+									alert ("Sorry! You don't have permission for delete this comment");
+			        	       } else if (msg == 0) {
+			        	    	   alert ("Sorry! You must be logged for this action");
 			        	       }
 	        	  			  
 	        	            }
@@ -102,7 +104,30 @@ $(document).ready(function() {
 	        	        return false;
 	        	    }
 	          });
-	          /    	
+	          //update comment
+	          $("button[name=update]").click(function(){
+	        	  cid = $(this).attr("cid");
+	        	  ucontent = $("textarea[cid="+cid+"]").val();
+	        	  //call ajax to update
+	        	  $.ajax({
+      	            url: "comments/update",
+      	            type: "POST",
+      	            data: "comment_id="+cid+"&post_id="+post_id+"&content="+ucontent,
+      	            success: function(msg) {
+      	            	   //check result return 
+	        	           if (msg == 1) {
+	        	        	 alert("Update comment success!");  
+      	          	         load_comment();
+	        	           } else if (msg == 2){
+								alert ("Sorry! You don't have permission for edit this comment");
+		        	       } else {
+		        	    	   alert("Sorry! The comment must be filled in.")
+		        	       }
+      	  			  
+      	            }
+      	        });
+	          });	
+	          
 	        }
 		});
 
