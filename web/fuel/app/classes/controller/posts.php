@@ -334,6 +334,44 @@ class Controller_Posts extends Controller_Template
 	
 	}
 	
+	/**
+	 * The function  use to get all post of user
+	 * @param user_id
+	 * just get post have status publish
+	 * @access public
+	 * @return status
+	 */
+	public function action_get_all_user_posts() {
+		$data = array();
+		$this->template->title = "User posts - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Users</a></li>
+								<li class="active">Posts</li>
+						',false);
+		//create data and call api
+		$user_id = Uri::segment(2);
+		
+		$method = 'GET';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/'.$user_id.'/posts';
+		$rs = $this->init_curl(null, $method, $link);
+		//check result
+		//create data var to contain result
+		
+		$data['data']='';
+		if ($rs['meta']['code'] == 200) {
+			$data['data'] = $rs['data'];
+			
+			$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong> Have '.$rs['meta']['result'].' posts in list .
+		        				</div>';
+		} else {
+			
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> '.$rs['meta']['message'].' 
+		        				</div>';
+		}
+		//return the content of template
+		$this->template->content = View::forge('posts/user_posts', $data);
+	}
 	
 	/**
 	 * function to init curl used to api
