@@ -34,7 +34,7 @@
 							if ($item['status'] == 1) {
 								echo "
 				                       <td>Published</td>
-				                       <td><a href=\"posts/$item[id]/unpublish\" class=\"btn btn-success btn-xs\" style=\"width:72px\">Un Publish</a></td>
+				                       <td><a href=\"posts/$item[id]/unpublish\" class=\"btn btn-warning btn-xs\" style=\"width:72px\">Un Publish</a></td>
 				                       ";
 								
 							} else echo "
