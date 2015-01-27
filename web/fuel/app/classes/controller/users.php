@@ -23,8 +23,7 @@ use Fuel\Core\Security;
  * @package  app
  * @extends  Controller_Template
  */
-class Controller_Users extends Controller_Template
-{
+class Controller_Users extends Controller_Template {
 
 	protected $filters = array('strip_tags', 'htmlentities');
 	/**
@@ -33,8 +32,7 @@ class Controller_Users extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_index()
-	{
+	public function action_index() {
 		$data = array();
 		$data['title']   = "Users - Miniblog";
 		$data['content'] = "";
@@ -50,8 +48,7 @@ class Controller_Users extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_register()
-	{
+	public function action_register() {
 		$data = array();
 		$data['title']   = "Register - Miniblog";
 		$data['content'] = "";

@@ -1,8 +1,8 @@
 <?php
 use Fuel\Core\Input;
 use Fuel\Core\Security;
-class Controller_Comments extends Controller_Template
-{
+class Controller_Comments extends Controller_Template {
+	
 	protected $filters = array('strip_tags', 'htmlentities');
 	
 	
@@ -13,8 +13,7 @@ class Controller_Comments extends Controller_Template
 	 * @return  Response
 	 */
 	
-	public function action_index()
-	{
+	public function action_index() {
 		$data = array();
 		$data['title']   = "Example Page";
 		$data['content'] = "Don't show me in the template";
@@ -29,8 +28,7 @@ class Controller_Comments extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_create()
-	{
+	public function action_create() {
 		$rs = array();
 		//check if call by ajax
 		if (Input::is_ajax()) {
@@ -78,8 +76,7 @@ class Controller_Comments extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_get_all_post_comment()
-	{
+	public function action_get_all_post_comment() {
 		$rs = array();
 		if (Input::is_ajax()) {
 			//create and call api to get all comments of this post

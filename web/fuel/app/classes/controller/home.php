@@ -20,8 +20,7 @@ use Fuel\Core\Controller_Template;
  * @package  app
  * @extends  Controller
  */
-class Controller_Home extends Controller_Template
-{
+class Controller_Home extends Controller_Template {
 
 	
 	/**
@@ -85,8 +84,7 @@ class Controller_Home extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_hello()
-	{
+	public function action_hello() {
 		return Response::forge(Presenter::forge('welcome/hello'));
 	}
 
@@ -96,8 +94,7 @@ class Controller_Home extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_404()
-	{
+	public function action_404() {
 		return Response::forge(Presenter::forge('welcome/404'), 404);
 	}
 	

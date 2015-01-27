@@ -44,8 +44,7 @@
 		</div> 
    </div>
    <?php 
-   if (isset($_POST['preview']))
-   {
+   if (isset($_POST['preview'])) {
    	
    ?>
    <!-- preview-->

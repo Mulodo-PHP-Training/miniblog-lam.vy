@@ -25,8 +25,7 @@ use Fuel\Core\Response;
  * @package  app
  * @extends  Controller_Template
  */
-class Controller_Posts extends Controller_Template
-{
+class Controller_Posts extends Controller_Template {
 
 	protected $filters = array('strip_tags', 'htmlentities');
 	/**
@@ -35,8 +34,7 @@ class Controller_Posts extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	*/
-	public function action_index()
-	{
+	public function action_index() {
 		return Response::redirect('/');
 	}
 	
@@ -46,8 +44,7 @@ class Controller_Posts extends Controller_Template
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_detail()
-	{
+	public function action_detail()	{
 		//get id of post
 		$post_id = Uri::segment(3);
 		$data = array();
