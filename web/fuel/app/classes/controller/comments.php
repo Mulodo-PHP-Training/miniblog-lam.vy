@@ -19,6 +19,7 @@ class Controller_Comments extends Controller_Template
 		$data['title']   = "Example Page";
 		$data['content'] = "Don't show me in the template";
 		$this->template->title = 'Example Page';
+		$this->template->set('breadcrumbs', '<li class="active">Comments</li>', false);
 		$this->template->content = View::forge('comments/index', $data);
 	}
 	
@@ -183,6 +184,47 @@ class Controller_Comments extends Controller_Template
 	
 	
 	}
+	
+	/**
+	 * The function  use to get all comments of user
+	 * @param user_id
+	 * 
+	 * @access public
+	 * @return status
+	 */
+	public function action_get_all_user_comments() {
+		$data = array();
+		$this->template->title = "User comments - Miniblog";
+		$this->template->set('breadcrumbs', '<li><a href="#">Users</a></li>
+								<li class="active">Comments</li>
+						',false);
+		//create data and call api
+		$user_id = Uri::segment(2);
+	
+		$method = 'GET';
+		$link = 'http://localhost/miniblog/miniblog-lam.vy/src/v1/users/'.$user_id.'/comments';
+		$rs = $this->init_curl(null, $method, $link);
+		//check result
+		//create data var to contain result
+	
+		$data['data']= array();
+		if ($rs['meta']['code'] == 200) {
+			$data['data'] = $rs['data'];
+				
+			$data['result'] = '<div class="alert alert-success" role="alert">
+									<strong>Success!</strong> Have '.$rs['meta']['result'].' comments in list .
+		        				</div>';
+		} else {
+				
+			$data['result'] = '<div class="alert alert-warning" role="alert">
+									<strong>Sorry!</strong> '.$rs['meta']['messages'].'
+		        				</div>';
+		}
+		//return the content of template
+		$this->template->content = View::forge('comments/user_comments', $data);
+	}
+	
+	
 	/**
 	 * function to init curl used to api
 	 * set method, link for request

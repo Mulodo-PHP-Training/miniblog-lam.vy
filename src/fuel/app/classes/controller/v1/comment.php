@@ -159,7 +159,7 @@ class Controller_V1_Comment extends Controller_Rest {
 				//check permission for delete, the owner of post or comment id can be del it
 				$deletable = Comment::is_deletable($post_id, $comment_id, $author_id);
 				//var_dump($check); die;
-				if (true == $deletable) {
+				if (true === $deletable) {
 					//delete comment
 					$result = Comment::delete_comment($comment_id);
 					return $this->response($result);
@@ -221,64 +221,48 @@ class Controller_V1_Comment extends Controller_Rest {
 			
 		}
 	}
-
 	
 	/**
 	 * The method get all comments of user id
+	 * 
 	 * @link http://localhost/v1/users/{user_id}/comments
 	 * @method : GET
-	 * @access  public
-	 * @return  Response
+	 * @access public
+	 * @return Response
 	 */
 	public function get_all_user_comments() {
-	
-		//check token
-		$token = Security::clean(Input::get('token'), $this->filters);
-		if (empty($token)) {
-			//return error 1202 token invalid
-			return $this->response(array(
-					'meta' => array(
-							'code' => TOKEN_NULL_ERROR ,
-							'description' => TOKEN_NULL_DESC ,
-							'messages' => TOKEN_NULL_MSG,
-					) ,
-					'data' => null,
-			));
+		
+		// check token
+		$token = Security::clean ( Input::get ( 'token' ), $this->filters );
+		
+		// get post id
+		$author_id = $this->param ( 'user_id' );
+		
+		$rs = Comment::get_all_user_comments ( $author_id );
+		if (false !== $rs) {
+			// return error array
+			return $this->response ( array (
+					'meta' => array (
+							'code' => '200',
+							'messages' => 'Get all comments of user success !',
+							'result' => count ( $rs ) 
+					),
+					'data' => $rs 
+			) );
 		} else {
-			$result = User::check_token($token);
-			if (is_numeric($result) && $result > 0) {
-				//get post id
-				$author_id = $this->param('user_id');
-				
-				$rs = Comment::get_all_user_comments($author_id);
-				if (false !== $rs) {
-					//return error array
-					return $this->response(
-							array(
-									'meta' => array(
-											'code' => '200',
-											'messages' => 'Get all comments of user success !',
-											'result' => count($rs)
-									),
-									'data' =>$rs
-							));
-				
-				} else {
-					//return error array
-					return $this->response(array(
-							'meta' => array(
-									'code' => COMMENT_USER_GET_ERROR ,
-									'description' => COMMENT_USER_GET_DSC ,
-									'messages' => COMMENT_USER_GET_MSG,
-							),
-							'data' => null,
-					));
-				
-				}
-			} else {
-				return $this->response($result);
+			// return error array
+			return $this->response ( array (
+					'meta' => array(
+								'code' => COMMENT_USER_GET_ERROR ,
+								'description' => COMMENT_USER_GET_DSC ,
+								'messages' => COMMENT_USER_GET_MSG,
+						),
+						'data' => null,
+				));
+			
 			}
-		}
+		
+		
 		
 	}
 
