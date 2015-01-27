@@ -203,8 +203,8 @@ class Post extends \Orm\Model {
 	public static function get_all_posts() {
 		try {
 			//use orm
-			$entry = Post::find('all', array('select' => array('id', 'title', 'created_at', 'modified_at')));
-			$entry = Post::query()->where('status', '=', '1')->get();
+			$entry = DB::query('SELECT 	p.id, p.title, p.created_at, p.modified_at, p.author_id, u.username FROM post p, user u WHERE p.status=1 AND u.id = p.author_id')->execute();
+			//$entry = Post::query()->where('status', '=', '1')->get();
 			//check rs
 			if (count($entry) > 0) {
 				$data = array();
@@ -221,6 +221,28 @@ class Post extends \Orm\Model {
 		}
 		
 		
+	}
+	public static function get_post_page($start, $row) {
+		try {
+			
+			$query = DB::query("SELECT 	p.id, p.title, p.created_at, p.modified_at, p.author_id, u.username FROM post p, user u WHERE p.status=1 AND u.id = p.author_id LIMIT $start,$row");
+			
+			$entry = $query->execute();
+				
+			if (count($entry) > 0) {
+				$data = array();
+				foreach ($entry as $item) {
+					//add data post in to array
+					$data[] = $item;
+				}
+				return $data;
+			} else {
+				return false;
+			}
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+			
+		}
 	}
 	
     /*
@@ -230,7 +252,7 @@ class Post extends \Orm\Model {
 	*/
 	public static function get_all_user_posts($user_id) {
 		try {
-			$entry = DB::query("SELECT id, title, created_at, modified_at FROM post WHERE status = 1 AND author_id = ".$user_id, DB::SELECT)->execute();
+			$entry = DB::query("SELECT id, title, created_at, modified_at, status FROM post WHERE status = 1 AND author_id = ".$user_id, DB::SELECT)->execute();
 			
 			//check rs
 			if (count($entry) > 0) {
@@ -250,6 +272,35 @@ class Post extends \Orm\Model {
 	
 	
 	}
+	
+   /*
+	* method use to get all current user's post
+	* use manage post
+	* @return the code 200 when success, 2506 when not have any result
+	*/
+	public static function get_all_current_user_posts($user_id) {
+		try {
+			$entry = DB::query("SELECT id, title, created_at, modified_at, status FROM post WHERE author_id = ".$user_id, DB::SELECT)->execute();
+				
+			//check rs
+			if (count($entry) > 0) {
+					
+				$data = array();
+				foreach ($entry as $item) {
+					//add data post in to array
+					$data[] = $item;
+				}
+				return $data;
+			} else {
+				return false;
+			}
+		} catch (\Exception $ex) {
+			Log::error($ex->getMessage());
+		}
+	
+	
+	}
+	
 	/*
 	 * method use to get a posts in db
 	* just get posts is actived
@@ -257,8 +308,8 @@ class Post extends \Orm\Model {
 	*/
 	public static function get_post_info($id) {
 		try {
-			$entry = DB::query("SELECT id, title, content, created_at, modified_at FROM post WHERE status = 1 AND id = ".$id, DB::SELECT)->execute();
-				
+			$entry = DB::query("SELECT p.id, p.title, p.content, p.created_at, p.modified_at, u.username, u.id as author_id FROM post p, user u WHERE  p.author_id=u.id AND p.id = ".$id, DB::SELECT)->execute();
+			
 			//check rs
 			if (count($entry) > 0) {
 				

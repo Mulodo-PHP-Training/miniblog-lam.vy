@@ -327,6 +327,47 @@ class Controller_V1_Post extends Controller_Rest {
 	}
 	
 	/**
+	 * The method get list post
+	 * @link http://localhost/v1/posts/
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_post_page() {
+		//call from model
+		$start = Uri::segment(4);
+		$row = Uri::segment(5);
+		$rs = Post::get_post_page($start, $row);
+		if (false !== $rs) {
+				
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => SUSSCESS_CODE,
+									'message' => 'Get posts success!',
+									'result' => count($rs),
+							),
+							'data' => $rs
+					));
+				
+		} else {
+				
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => POST_GET_LIST_ERROR,
+									'description' => POST_GET_LIST_DESC,
+									'messages' => POST_GET_LIST_MSG,
+							),
+							'data' => null,
+					)
+			);
+		}
+	
+	
+	}
+	
+	/**
 	 * The method get list post of user
 	 * @link http://localhost/v1/users/{user_id}/posts/
 	 * @method : GET
@@ -369,6 +410,73 @@ class Controller_V1_Post extends Controller_Rest {
 	
 	}
 	
+	
+	/**
+	 * The method get list post of user
+	 * @link http://localhost/v1/users/{user_id}/posts/
+	 * @method : GET
+	 * @access  public
+	 * @return  Response
+	 */
+	public function get_all_current_user_posts() {
+		//get user id
+		$user_id = $this->param('user_id');
+		$token = Input::get('token');
+		//check token
+		if (empty($token)) {
+			//error code
+			return $this->response(
+					array(
+							'meta' => array(
+									'code' => TOKEN_NULL_ERROR,
+									'description' => TOKEN_NULL_DESC,
+									'messages' => TOKEN_NULL_MSG,
+							),
+							'data' => null,
+					)
+			);
+			
+		} else {
+			$rs = User::check_token($token);
+			//check user id return
+			if (is_numeric($rs) && $rs > 0) {
+				//call from model
+				$rs = Post::get_all_current_user_posts($user_id);
+			
+				if (false !== $rs) {
+			
+					return $this->response(
+							array(
+									'meta' => array(
+											'code' => SUSSCESS_CODE,
+											'message' => 'Get all posts of user success!',
+											'result' => count($rs),
+									),
+									'data' => $rs
+							));
+			
+				} else {
+					//return error if not have any result
+					return $this->response(
+							array(
+									'meta' => array(
+											'code' => POST_GET_USER_POST_ERROR,
+											'description' => POST_GET_USER_POST_DESC,
+											'messages' => POST_GET_USER_POST_MSG,
+									),
+									'data' => null,
+							)
+					);
+				}
+			} else {
+				//error token is not exist db
+				return $this->response($rs) ;
+			}
+		}
+		
+	
+	
+	}
 	/**
 	 * The method get list post of user
 	 * @link http://localhost/v1/posts/{post_id}
