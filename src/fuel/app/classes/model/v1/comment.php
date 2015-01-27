@@ -255,10 +255,11 @@ class Comment extends \Orm\Model {
 	public static function get_all_user_comments($author_id) {
 		try {
 			//select comments
-			$rs = DB::select('id', 'content', 'post_id', 'created_at', 'modified_at')
-			->from('comment')
-			->where('author_id', '=', $author_id)
-			->execute();
+			$query = DB::query(' SELECT comment.id, comment.content, comment.post_id, comment.created_at, comment.modified_at, post.title 
+					FROM comment, post 
+					WHERE comment.author_id = :author_id AND post.id = comment.post_id');
+			$query->bind('author_id', $author_id);
+			$rs = $query->execute();
 				
 			if (count($rs) > 0) {
 	

@@ -356,7 +356,7 @@ class Controller_Posts extends Controller_Template
 		//check result
 		//create data var to contain result
 		
-		$data['data']='';
+		$data['data'] = array();
 		if ($rs['meta']['code'] == 200) {
 			$data['data'] = $rs['data'];
 			
@@ -366,7 +366,7 @@ class Controller_Posts extends Controller_Template
 		} else {
 			
 			$data['result'] = '<div class="alert alert-warning" role="alert">
-									<strong>Sorry!</strong> '.$rs['meta']['message'].' 
+									<strong>Sorry!</strong> '.$rs['meta']['messages'].' 
 		        				</div>';
 		}
 		//return the content of template
