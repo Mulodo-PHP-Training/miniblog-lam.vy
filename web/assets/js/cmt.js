@@ -39,7 +39,7 @@ $(document).ready(function() {
 	        		date = new Date(data.data[i].modified_at*1000);
 	        		modified = (date.getFullYear() ) + '/' + (date.getMonth()+1) + '/' +  date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds();
 	        		rs += '<div class="col-sm-12" >'
-	        		        +'<p><a href="#"><h4>'+data.data[i].username+'</h4></a> <span class="content-comment" cid="'+data.data[i].id+'">'+data.data[i].content+'</span>'
+	        		        +'<p><a href="users/profile/'+data.data[i].author_id+'"><h4>'+data.data[i].username+'</h4></a> <span class="content-comment" cid="'+data.data[i].id+'">'+data.data[i].content+'</span>'
 	        				+'<span class="comment"> '+modified+' - <span class="link-comment" cid="'+data.data[i].id+'"><span class="glyphicon glyphicon-edit"></span></span> - <span class="del-comment" cid="'+data.data[i].id+'">'
 	        				     +'<span class="glyphicon glyphicon-remove"></span></span>'	
 	        				+'</p>'
@@ -117,13 +117,16 @@ $(document).ready(function() {
       	            data: "comment_id="+cid+"&post_id="+post_id+"&content="+ucontent,
       	            success: function(msg) {
       	            	   //check result return 
+      	            	
 	        	           if (msg == 1) {
 	        	        	 alert("Update comment success!");  
       	          	         load_comment();
 	        	           } else if (msg == 2){
 								alert ("Sorry! You don't have permission for edit this comment");
-		        	       } else {
+		        	       } else if (msg == 3) {
 		        	    	   alert("Sorry! The comment must be filled in.")
+		        	       } else {
+		        	    	   alert("Sorry! You must login for this action.")
 		        	       }
       	  			  
       	            }

@@ -18,7 +18,7 @@
 		<div class="col-md-6">
 		  <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> : <a><?php echo $item['lastname'].' '.$item['firstname'];?></a></h3>
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> : <a href="users/profile/<?php echo $item['id']?>"><?php echo $item['lastname'].' '.$item['firstname'];?></a></h3>
                 </div>
                 <div class="panel-body">
 					<p>Login name : <?php echo $item['username']?>
